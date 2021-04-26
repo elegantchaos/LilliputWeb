@@ -32,10 +32,12 @@
                 <div><a href="/register">Register</a></div>
                 <div><a href="/login">Login</a></div>
                 #else:
-                <div><a href="/logout">Logout</a></div>
+                <div><a href="/settings">#(user.name)</a></div>
+                <div><a href="/logout">Logout</a> (logged in as #(user.name))</div>
                 #endif
                 </div>
 
+                #if(admin):
                 <h4>Users</h4>
                 #for(user in users):
                    <li>#(user.name) #(user.email)</li>
@@ -56,7 +58,7 @@
                 #endfor
 
                 <br />
-
+                #endif
             </div>
           </div>
         </div>

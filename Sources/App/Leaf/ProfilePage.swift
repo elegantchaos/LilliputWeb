@@ -50,6 +50,7 @@ struct ProfilePage: LeafPage {
     let tokens: [Token]
     let sessions: [SessionRecord]
     let history: [String]
+    let admin: Bool
     
     init(user: User?, users: [User], tokens: [Token], sessions: [SessionRecord]) {
         let title: String
@@ -80,7 +81,7 @@ struct ProfilePage: LeafPage {
         self.users = users
         self.tokens = tokens
         self.sessions = sessions
-        
+        self.admin = user?.name.lowercased() == "sam"
         var output = driver.full
         output.removeLast(3)
         self.history = output

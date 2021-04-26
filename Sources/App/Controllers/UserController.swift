@@ -1,19 +1,16 @@
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+//  Created by Sam Deane on 26/04/21.
+//  All code (c) 2021 - present day, Elegant Chaos Limited.
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 import Fluent
 import Vapor
 
 
-struct InputRequest: Content {
-    let command: String
-}
-
 struct UserController: RouteCollection {
-    let sessionProtected: RoutesBuilder
-    
     func boot(routes: RoutesBuilder) throws {
-        sessionProtected.get("", use: renderProfile)
-        sessionProtected.post("input", use: performInput)
-        sessionProtected.get("reset", use: performReset)
-        sessionProtected.get("logout", use: performLogout)
+        routes.get("settings", use: renderProfile)
+        routes.get("logout", use: performLogout)
     }
     
     func renderProfile(_ req: Request) throws -> EventLoopFuture<Response> {
@@ -46,32 +43,6 @@ struct UserController: RouteCollection {
     func resetHistory(_ req: Request, user: User) -> EventLoopFuture<Void> {
         user.history = ""
         return user.update(on: req.db)
-    }
-
-    func performInput(_ req: Request) throws -> EventLoopFuture<Response> {
-        let token = req.auth.get(Token.self)
-        if let token = token {
-            do {
-                let input = try req.content.decode(InputRequest.self)
-                return token.$user.get(on: req.db)
-                    .flatMap { user in self.updateHistory(req, user: user, input: input) }
-                    .thenRedirect(with: req, to: "/")
-            } catch {
-            }
-        }
-
-        return req.eventLoop.makeSucceededFuture(req.redirect(to: "/"))
-    }
-
-    func performReset(_ req: Request) throws -> EventLoopFuture<Response> {
-        let token = req.auth.get(Token.self)
-        if let token = token {
-            return token.$user.get(on: req.db)
-                .flatMap { user in self.resetHistory(req, user: user) }
-                .thenRedirect(with: req, to: "/")
-        }
-
-        return req.eventLoop.makeSucceededFuture(req.redirect(to: "/"))
     }
 
 

@@ -35,12 +35,14 @@ extension LoginRequest: Validatable {
 }
 
 struct LoginController: RouteCollection {
-    let sessionEnabled: RoutesBuilder
-
     func boot(routes: RoutesBuilder) throws {
-        
         routes.get("login", use: renderLogin)
-        sessionEnabled.post("login", use: handleLogin)
+        if let app = routes as? Application {
+            let sessionEnabled = routes.grouped(
+                SessionsMiddleware(session: app.sessions.driver)
+            )
+            sessionEnabled.post("login", use: handleLogin)
+        }
     }
     
     func renderLogin(_ req: Request) throws -> EventLoopFuture<Response> {

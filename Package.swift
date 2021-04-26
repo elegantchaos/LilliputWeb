@@ -1,4 +1,4 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.3
 import PackageDescription
 
 let package = Package(
@@ -17,12 +17,23 @@ let package = Package(
     ],
     targets: [
         .target(name: "App", dependencies: [
+            .target(name: "ExampleGames"),
             .product(name: "Fluent", package: "fluent"),
             .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
             .product(name: "Vapor", package: "vapor"),
             .product(name: "Leaf", package: "leaf"),
+            .product(name: "Lilliput", package: "Lilliput"),
         ]),
-        .target(name: "Run", dependencies: ["App"]),
+        .target(
+            name: "ExampleGames",
+            dependencies: [],
+            resources: [
+                .copy("Resources/Games")
+            ]
+        ),
+        .target(name: "Run", dependencies: [
+            .target(name: "App"),
+        ]),
         .testTarget(name: "AppTests", dependencies: [
             .target(name: "App"),
             .product(name: "XCTVapor", package: "vapor"),

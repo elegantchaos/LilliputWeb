@@ -4,7 +4,43 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 import Fluent
+import Lilliput
+import ExampleGames
 import Vapor
+
+
+class TestDriver: Driver {
+    
+    let showOutput = false
+    var input: [String] = []
+    var output: [String] = []
+    var full: [String] = []
+    
+    func getInput(stopWords: [String.SubSequence]) -> Input {
+        guard let string = input.first else { return Input("quit", stopWords: stopWords)! }
+        
+        input.remove(at: 0)
+        full.append("> \(string)\n\n")
+        return Input(string, stopWords: [])!
+    }
+    
+    func output(_ string: String, newParagraph: Bool) {
+        output.append(string)
+        full.append(string)
+        if newParagraph {
+            output.append("\n\n")
+            full.append("\n\n")
+        }
+    }
+    
+    func finish() {
+        if showOutput {
+            print(output)
+            print(full.joined())
+        }
+    }
+    
+}
 
 struct ProfilePage: LeafPage {
     var file: String
@@ -29,13 +65,22 @@ struct ProfilePage: LeafPage {
             history = []
         }
 
+        let driver = TestDriver()
+        let engine = Engine(driver: driver)
+        let url = ExampleGames.urlForGame(named: "PersonTest")!
+        engine.load(url: url)
+        
+        driver.input = history
+        engine.run()
+        driver.finish()
+        
         self.user = user
         self.file = "profile"
         self.meta = .init(title, description: description)
         self.users = users
         self.tokens = tokens
         self.sessions = sessions
-        self.history = history
+        self.history = driver.full
     }
 }
 

@@ -2,11 +2,13 @@
 import PackageDescription
 
 let package = Package(
-    name: "simple",
+    name: "LilliputWeb",
     platforms: [
        .macOS(.v10_15)
     ],
     dependencies: [
+        .package(url: "https://github.com/elegantchaos/Lilliput.git", from: "1.0.0"),
+
         // 💧 A server-side Swift web framework.
         .package(url: "https://github.com/vapor/vapor.git", from: "4.44.1"),
         .package(url: "https://github.com/vapor/fluent.git", from: "4.2.0"),

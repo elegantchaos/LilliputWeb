@@ -20,12 +20,39 @@
         }
       },
       {
+        "package": "Coercion",
+        "repositoryURL": "https://github.com/elegantchaos/Coercion.git",
+        "state": {
+          "branch": null,
+          "revision": "f5ae9b7b191d9c042047e08e880e80ce676de230",
+          "version": "1.1.2"
+        }
+      },
+      {
+        "package": "CollectionExtensions",
+        "repositoryURL": "https://github.com/elegantchaos/CollectionExtensions.git",
+        "state": {
+          "branch": null,
+          "revision": "203421ff555981e6e9545e3a0d62a82b3c896deb",
+          "version": "1.1.4"
+        }
+      },
+      {
         "package": "console-kit",
         "repositoryURL": "https://github.com/vapor/console-kit.git",
         "state": {
           "branch": null,
           "revision": "08f36a30e0893e6a52fefbf1c2db4a6bc1288ba2",
           "version": "4.2.5"
+        }
+      },
+      {
+        "package": "Files",
+        "repositoryURL": "https://github.com/elegantchaos/Files.git",
+        "state": {
+          "branch": null,
+          "revision": "a86af44d44917e05facab8abb15a482383bd8f12",
+          "version": "1.2.0"
         }
       },
       {
@@ -71,6 +98,24 @@
           "branch": null,
           "revision": "e8d4f8894bf36889fda9c5b2a9d42bc5021b30c8",
           "version": "1.2.0"
+        }
+      },
+      {
+        "package": "Lilliput",
+        "repositoryURL": "https://github.com/elegantchaos/Lilliput.git",
+        "state": {
+          "branch": null,
+          "revision": "9ac90d76fd5d364c153579fca56fefac7acbfe31",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "Logger",
+        "repositoryURL": "https://github.com/elegantchaos/Logger.git",
+        "state": {
+          "branch": null,
+          "revision": "8ceabf0985b5255f7be42e023a3f63a7779a9145",
+          "version": "1.6.0"
         }
       },
       {
@@ -215,6 +260,15 @@
           "branch": null,
           "revision": "2b06a70dfcfa76a2e5079f60e3ae911511f09db0",
           "version": "2.1.2"
+        }
+      },
+      {
+        "package": "XCTestExtensions",
+        "repositoryURL": "https://github.com/elegantchaos/XCTestExtensions.git",
+        "state": {
+          "branch": null,
+          "revision": "8dfc98162276db61530cfaa9f1096d05988c3e60",
+          "version": "1.3.3"
         }
       }
     ]

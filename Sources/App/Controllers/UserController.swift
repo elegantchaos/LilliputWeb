@@ -12,6 +12,7 @@ struct UserController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         sessionProtected.get("", use: renderProfile)
         sessionProtected.post("input", use: performInput)
+        sessionProtected.get("reset", use: performReset)
         sessionProtected.get("logout", use: performLogout)
     }
     
@@ -41,7 +42,12 @@ struct UserController: RouteCollection {
         user.history.append("\n")
         return user.update(on: req.db)
     }
-    
+
+    func resetHistory(_ req: Request, user: User) -> EventLoopFuture<Void> {
+        user.history = ""
+        return user.update(on: req.db)
+    }
+
     func performInput(_ req: Request) throws -> EventLoopFuture<Response> {
         let token = req.auth.get(Token.self)
         if let token = token {
@@ -56,8 +62,19 @@ struct UserController: RouteCollection {
 
         return req.eventLoop.makeSucceededFuture(req.redirect(to: "/"))
     }
-    
-    
+
+    func performReset(_ req: Request) throws -> EventLoopFuture<Response> {
+        let token = req.auth.get(Token.self)
+        if let token = token {
+            return token.$user.get(on: req.db)
+                .flatMap { user in self.resetHistory(req, user: user) }
+                .thenRedirect(with: req, to: "/")
+        }
+
+        return req.eventLoop.makeSucceededFuture(req.redirect(to: "/"))
+    }
+
+
     func performLogout(_ req: Request) throws -> Response {
         req.auth.logout(User.self)
         req.session.destroy()

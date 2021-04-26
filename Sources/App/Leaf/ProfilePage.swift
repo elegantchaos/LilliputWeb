@@ -80,7 +80,10 @@ struct ProfilePage: LeafPage {
         self.users = users
         self.tokens = tokens
         self.sessions = sessions
-        self.history = driver.full
+        
+        var output = driver.full
+        output.removeLast(3)
+        self.history = output
     }
 }
 

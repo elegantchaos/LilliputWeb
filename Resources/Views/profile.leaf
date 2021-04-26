@@ -30,8 +30,9 @@
 
 
                 <h4>Actions</h4>
-                <div><a href="/register">Register</a></div>
+                <div><a href="/reset">Reset</a></div>
                 #if(user == nil):
+                <div><a href="/register">Register</a></div>
                 <div><a href="/login">Login</a></div>
                 #else:
                 <div><a href="/logout">Logout</a></div>

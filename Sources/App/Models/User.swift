@@ -6,9 +6,10 @@ import Vapor
 import Fluent
 
 extension FieldKey {
-    static var name: FieldKey { return "name" }
-    static var email: FieldKey { return "email" }
-    static var passwordHash: FieldKey { return "password_hash" }
+    static var name: FieldKey = "name"
+    static var email: FieldKey = "email"
+    static var history: FieldKey = "history"
+    static var passwordHash: FieldKey = "password_hash"
 }
 
 final class User: Model, Content {
@@ -26,6 +27,9 @@ final class User: Model, Content {
     @Field(key: .passwordHash)
     var passwordHash: String
 
+    @Field(key: .history)
+    var history: String
+    
     init() { }
 
     init(id: UUID? = nil, name: String, email: String, passwordHash: String) {
@@ -33,6 +37,7 @@ final class User: Model, Content {
         self.name = name
         self.email = email
         self.passwordHash = passwordHash
+        self.history = ""
     }
 }
 

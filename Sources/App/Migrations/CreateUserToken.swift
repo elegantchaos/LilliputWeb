@@ -6,7 +6,7 @@
 import Fluent
 
 extension Token {
-    struct Migration: Fluent.Migration {
+    struct Create: Fluent.Migration {
         var name: String { "CreateToken" }
 
         func prepare(on database: Database) -> EventLoopFuture<Void> {

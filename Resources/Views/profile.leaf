@@ -6,6 +6,38 @@
               <div class="card-body">
                 <h3 class="card-title">#(meta.title)</h3>
 
+                #if(meta.error):
+                <div class="form-group">
+                <em>#(meta.error)</em>
+                </div>
+                #endif
+
+                <div class="form-group">
+                #for(line in history):
+                   <li>#(line)</li>
+                #endfor
+                </div>
+
+                <form action="/input" method="POST">
+                  <div class="form-group">
+                    <label for="command">Command</label>
+                    <input type="text" name="command" class="form-control" id="command" value="#(request.command)" />
+                  </div>
+                  <div class="form-group">
+                    <input type="submit" class="btn btn-block btn-success" value="input" />
+                  </div>
+                </form>
+
+
+                <h4>Actions</h4>
+                <div><a href="/register">Register</a></div>
+                #if(user == nil):
+                <div><a href="/login">Login</a></div>
+                #else:
+                <div><a href="/logout">Logout</a></div>
+                #endif
+                </div>
+
                 <h4>Users</h4>
                 #for(user in users):
                    <li>#(user.name) #(user.email)</li>
@@ -27,11 +59,6 @@
 
                 <br />
 
-                <h4>Actions</h4>
-                <div><a href="/register">Register</a></div>
-                <div><a href="/login">Login</a></div>
-                <div><a href="/logout">Logout</a></div>
-                </div>
             </div>
           </div>
         </div>

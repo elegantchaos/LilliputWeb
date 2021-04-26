@@ -17,10 +17,11 @@ public func configure(_ app: Application) throws {
     }
     app.sessions.use(.fluent)
     
-    app.migrations.add(User.Migration())
-    app.migrations.add(Token.Migration())
+    app.migrations.add(User.Create())
+    app.migrations.add(Token.Create())
     app.migrations.add(SessionRecord.migration)
-    
+    app.migrations.add(User.AddHistory())
+
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))     // serve files from /Public folder
 
     // Configure Leaf

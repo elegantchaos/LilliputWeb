@@ -56,7 +56,7 @@ struct ProfilePage: LeafPage {
         let description: String
         let history: [String]
         if let user = user {
-            title = "Logged in as \(user.name)."
+            title = "Strange Cases…"
             description = "Profile page for \(user.name)."
             history = user.history.split(separator: "\n").compactMap({ String($0) })
         } else {
@@ -67,7 +67,7 @@ struct ProfilePage: LeafPage {
 
         let driver = TestDriver()
         let engine = Engine(driver: driver)
-        let url = ExampleGames.urlForGame(named: "PersonTest")!
+        let url = ExampleGames.urlForGame(named: "StrangeCases")!
         engine.load(url: url)
         
         driver.input = history

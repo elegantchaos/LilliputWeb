@@ -1,0 +1,367 @@
+{
+    "hub.pardoe-office": {
+        "traits": ["location"],
+        "descriptions": {
+            "definite": "the Chief Inspector’s office",
+            "container": "the Chief Inspector‘s desk.",
+            "location": "Chief Inspector Pardoe sits behind his large desk, a number of papers before him."
+        },
+        "exits": {
+            "south": "hub.corridor"
+        },
+        "aware": true
+    },
+    
+    "hub.pardoe-chair": {
+        "traits": ["movable", "sittable", "location"],
+        "names": ["chair"],
+        "dontLookWhenArriving": true,
+        "location": "hub.pardoe-office",
+        "descriptions": {
+            "definite": "the chair",
+            "detailed": "A basic, common or garden chair.",
+            "indefinite": "a chair",
+            "location": "You are sitting on a sturdy looking chair. It's not very comfortable.",
+            "outside": "In front of you is "
+        }
+    },
+
+    "hub.pardoe": {
+        "traits": ["person"],
+        "names": ["pardoe"],
+        "deferredLocation": "hub.pardoe-office",
+        "descriptions": {
+            "definite": "the chief inspector",
+            "detailed": "Chief Inspector Pardoe",
+            "indefinite": "Chief Inspector Pardoe"
+        },
+
+        "handlers": [
+            {
+                "triggers": [
+                ],
+                
+                "actions": [
+                ]
+            },
+
+            {
+                "triggers": [
+                    { "when": "playerArrived" },
+                    { "when": "mission", "of": "player", "is": null }
+                ],
+                
+                "actions": [
+                    { "speak": "no-case" }
+                ]
+            },
+
+            {
+                "actions": [ { "speak": "stood-up" } ],
+                "triggers": [
+                    { "when": "playerArrived", "from": "hub.pardoe-chair" },
+                    { "when": "mission", "of": "player", "not": null }
+                ]
+            },
+
+            {
+                "actions": [ { "speak": "still-here" } ],
+                "triggers": [
+                    { "when": "playerArrived", "from": "hub.corridor" },
+                    { "when": "mission", "of": "player", "not": null }
+                ],
+                
+            },
+
+            {
+                "triggers": [
+                    { "when": "event", "is": "idle" },
+                    { "when": "mission", "of": "player", "not": null }
+                ],
+                
+                "actions": [
+                    { "speak": "on-case" }
+                ]
+            },
+
+            {
+                "triggers": [
+                    { "when": "event", "is": "sat" },
+                    { "when": "mission", "of": "player", "is": null }
+                ],
+                
+                "actions": [
+                    { "speak": "case-1" },
+                    { "set": "mission", "of": "player", "to": "bray"}
+                ]
+            },
+
+            {
+                "triggers": [{ "when": "reply", "was": "question1" }],
+                "actions": [{ "speak": "answer1" }]
+            },
+
+            {
+                "triggers": [{ "when": "reply", "was": "question1a" }],
+                "actions": [{ "speak": "answer1a" }]
+            },
+
+            {
+                "triggers": [{ "when": "reply", "was": "question1b" }],
+                "actions": [{ "speak": "answer1b" }]
+            },
+
+            {
+                "triggers": [{ "when": "reply", "was": "question2" }],
+                "actions": [{ "speak": "answer2" }]
+            },
+
+            {
+                "triggers": [{ "when": "reply", "was": "question2a" }],
+                "actions": [{ "speak": "answer2a" }]
+            },
+
+            {
+                "triggers": [{ "when": "reply", "was": "question2b" }],
+                "actions": [{ "speak": "answer2b" }]
+            },
+
+            {
+                "triggers": [{ "when": "reply", "was": "question2c" }],
+                "actions": [{ "speak": "answer2c" }]
+            },
+
+            {
+                "triggers": [{ "when": "reply", "in": ["question2d","question3d"] }],
+                "actions": [{ "speak": "answer2d" }]
+            },
+
+            {
+                "triggers": [{ "when": "reply", "in": ["question2e","question3e"] }],
+                "actions": [{ "speak": "answer2e" }]
+            },
+
+            {
+                "triggers": [{ "when": "reply", "was": "question3" }],
+                "actions": [{ "speak": "answer3" }]
+            },
+
+            {
+                "triggers": [{ "when": "reply", "was": "question3a" }],
+                "actions": [{ "speak": "answer3a" }]
+            },
+
+            {
+                "triggers": [{ "when": "reply", "was": "question3b" }],
+                "actions": [{ "speak": "answer3b" }]
+            },
+
+            {
+                "triggers": [{ "when": "reply", "was": "question3c" }],
+                "actions": [{ "speak": "answer3c" }]
+            },
+
+        ],
+        
+        "dialogue": {
+            "sentences": {
+                "no-case": "Pardoe gazes at you with his cold grey eyes and gestures to the empty chair with the stem of his pipe.\n\n“Sit down, Inspector.”",
+                
+                "on-case": "“Was there something else Inspector?”",
+                
+                "stood-up": "“On you go then, Inspector. You have your assignment and the cab is waiting for you outside.”",
+
+                "still-here": "Chief Inspector Pardoe looks up as you enter the room. “Still here Inspector? You have your assignment and the cab is waiting for you outside.”",
+                
+                "case-1": "The Chief Inspector takes a moment to fill his pipe and light it. He flicks the spent match into the fireplace and sighs, exhaling a cloud of smoke.\n\n“Have you heard of Bray Manor, Edmund?”\n\n“No sir,” you reply.\n\n“It is some way outside our normal jurisdiction,” the old man continues, “but the local constabulary have requested our help. It seems there are strange goings on at the old house on the hill. First, all the domestic staff quit their posts and refused to return, and now there are reports that the entire family who lived there have vanished… not been seen in months. I want you to go to the manor and have a sniff around, find out what happened. I know you have a nose for this sort of thing. There is a Hansom waiting outside, the driver will take you there.”",
+                
+                "answer1": "As I said, Inspector, it’s not within our normal jurisdiction. The village of Featherwell is a couple of hours south of the city.” The Chief Inspector waves a hand somewhat dismissively. “A typical rural village. A few farms, a small pub, and two dozen jumpy locals.",
+                
+                "answer1a": "Bray Manor is one of the older houses in the area. It sits on a hill just on the outskirts of the village. As is so often with these old houses, the manor has been owned by the same family for generations.",
+                
+                "answer1b": "The old man stifles a laugh as he responds. “I am afraid not, Edmund. The wheels of progress have not yet arrived in Featherwell. You will have to travel there by cab.",
+                
+                "answer2": "Pardoe leans back in his leather chair and rubs his hands together as he thinks. After a few moments of contemplation he begins to speak, his remarkable memory reciting the details from the case file. “The current head of the family is Mister John Bray. Married to Penelope Bray. There are two children: an infant called Amelia and an older girl called Cecile. The family owns a lot of the land around the village. Their income comes from the rents paid by the tenant farmers.",
+                
+                "answer2a": "That’s the curious thing, Edmund.” Pardoe responds, pointing the stem of his pipe at you. “The tenants didn’t report it, though they seemed to know something was not right. They just kept paying their rents and tending to the fields. It was only when the harvest was taken in that one of them went to the local constabulary, saying they hadn’t seen John Bray for weeks.",
+                
+                "answer2b": "They do not suspect the villagers. That much is clear from their report. By all accounts, John Bray was a reasonable landlord. He was well-regarded by his tenants and they had no reason to do away with him. The local police have searched the house and the grounds but found nothing.",
+                
+                "answer2c": "The local police interviewed every man, woman, and articulate child in the village. They learned nothing. Just a lot of local superstition and confusion.",
+                
+                "answer2d": "Pardoe groans and shakes his head. “You are predictable, Edmund. The faintest whiff of anything supernatural and you start sniffing around with that busted nose of yours like a damned bloodhound. There is an old legend about the land around the village being the stomping grounds of a… creature of some sort. The locals have told stories of this beast for hundreds of years. You know the sort, typical nonsensical folk tales. However, the disappearance of the Bray family only seems to have fanned the flames of this hysteria.",
+                
+                "answer2e": "Your line of questioning is clearly trying the Chief Inspector’s patience. “Damnation, Forrester!” he bellows, slamming his fist down on the desk. “I tell you it is just a local myth. The penny dreadful delusions of the cider-addled minds at the village pub. A big hairy beast that stalks the fields by moonlight. Every fifty years or so, an inhabitant of the village comes forth with some tall tale of being chased by the creature, although the teller of such fanciful stories is invariably mad or drunk or both.",
+                
+                "answer3": "Because you are the only one available today,” Pardoe sighs. “Now that you have concluded that nasty business with the late widow Phrigg, I see no reason why you cannot work this case.",
+                
+                "answer3a": "Walmsley?” Parode scowls. “That damned fool claims he is sick but I suspect he is just hung over again.”",
+                
+                "answer3b": "“Gilchrist is to old and soft to send. The great pudding would probably fall asleep on the carriage ride out there.”",
+                
+                "answer3c": "“You do not have a choice in this matter, Inspector. The local police are at their wit’s end. The have interviewed everyone in the village and have come up with nothing. No suspects. No witnesses. No leads… Just a lot of superstition and confusion.”",
+            },
+            
+            "replies": {
+                "question1": {
+                    "text": "Where is Bray Manor, Sir?",
+                    "shows": [
+                        { "when": "mission", "of": "player", "is": "bray" },
+                    ]
+                },
+                
+                "question2": {
+                    "text": "What can you tell me about the family who are missing?",
+                    "shows": [
+                        { "when": "mission", "of": "player", "is": "bray" },
+                    ]
+                },
+                
+                "question3": {
+                    "text": "Why are you giving this case to me?",
+                    "shows": [
+                        { "when": "mission", "of": "player", "is": "bray" },
+                    ]
+                },
+                
+                
+                "question1a": {
+                    "text": "And what of the manor itself, sir?",
+                    "shows": [
+                        { "when": "asked", "includes": ["question1"] }
+                    ]
+                },
+                
+                "question1b": {
+                    "text": "Is there no train that could take me there?",
+                    "shows": [
+                        { "when": "asked", "includes": ["question1"] }
+                    ]
+                },
+                
+                "question2a": {
+                    "text": "Who reported the family missing?",
+                    "shows": [
+                        { "when": "asked", "includes": ["question2"] }
+                    ]
+                },
+                
+                "question2b": {
+                    "text": "What do the local police think happened?",
+                    "shows": [
+                        { "when": "asked", "includes": ["question2"] }
+                    ]
+                },
+                
+                "question2c": {
+                    "text": "The villagers… What do they say about the matter?",
+                    "shows": [
+                        { "when": "asked", "includes": ["question2"] }
+                    ]
+                },
+                
+                "question2d3d": {
+                    "text": "Superstition, sir? What do you mean by that?",
+                    "shows": [
+                        { "when": "asked", "includes": ["question2c", "question3c"] }
+                    ]
+                },
+                
+                "question2e3e": {
+                    "text": "Can you tell me any more about this creature?",
+                    "shows": [
+                        { "when": "asked", "includes": ["question2d", "question3d"] }
+                    ]
+                },
+                
+                "question3a": {
+                    "text": "What about Constable Walmsley?",
+                    "shows": [
+                        { "when": "asked", "includes": ["question3"] }
+                    ]
+                },
+                
+                "question3b": {
+                    "text": "What about Constable Gilchrist?",
+                    "shows": [
+                        { "when": "asked", "includes": ["question3"] }
+                    ]
+                },
+                
+                "question3c": {
+                    "text": "What if I refuse?",
+                    "shows": [
+                        { "when": "asked", "includes": ["question3"] }
+                    ]
+                }
+                
+            },
+            
+            "dialogue-disabled": {
+                
+                "case-1-done": {
+                    "lines": [
+                        "The Chief Inspector spends several minutes reading your report. He shakes his head and tosses the papers into the fireplace.\n“Family curses? A monster lurking in the moonlight? Good heavens, Forrester, this is unacceptable. How many times must I tell you to leave these… these fanciful details out of your reports?”\n“Do you wish me to rewrite it, sir?” you ask.\n“No,” Pardoe sighs. “Time is short and there is to much work to be done.”\nHe gestures to the two files on the desk in front of him.\n“Two cases for you, Inspector. The first is a body that has been found by the river, the second is a missing person, a young aristocrat who has gone missing. You may take your pick which you tackle first.”"
+                    ],
+                    "triggers": [
+                        { "key": "spoken", "of": "context", "not": true},
+                        { "key": "sitting", "of": "player", "is": true },
+                        { "key": "mission", "of": "player", "is": null }
+                    ]
+                },
+                "case-2": {
+                    "lines": [
+                        "The Chief Inspector leans back in his chair and something like a smile flickers across his features.\n“Very good, Edmund. This case looks as though it will be a straightforward one… A mudlark found a body on the mudflats by the river this morning. I have already sent Constable Gilchrist there with a physician, but if this transpires to be a murder, then I would prefer to have someone half-competent in attendance. There is a Hansom cab waiting for you outside. You had best make haste before the tide comes back in.”"
+                    ],
+                    "triggers": [
+                        {
+                            "event": "arrived"
+                        }
+                    ]
+                },
+                "case-2-done": {
+                    "lines": [
+                        "The Chief Inspector cannot hide his annoyance as he reads your report.\n”A giant snake with a man‘s face dwelling in the sewers beneath the city?” he splutters, tearing the report into several pieces and tossing them into the fireplace.\n“Such tall tales are not even fit for the nonsense they print in the Illustrated Police News.”\n“Do you doubt my account, Sir?” you ask, feeling anger blaze in the pit of your stomach.\n“Whether I believe you or not is immaterial, Edmund,” the old man glares at you and his pale grey eyes throw cold water on the fire within. “The simple fact is that you cannot write this in a report! It will not stand!”"
+                    ],
+                    "triggers": [
+                        {
+                            "event": "arrived"
+                        }
+                    ]
+                },
+                "case-3": {
+                    "lines": [
+                        "Chief Inspector Pardoe strikes a match and holds the flame to the bowl of his pipe. He takes a few puffs and then pushes the file towards you.\n“Rupert Fortescue. Twenty two years old. The oldest son of Sir Leyland Fortescue. He has not been seen for a week and his father is understandably concerned. The lad was involved in some shenanigans last year that brought some embarrassment to the family and Sir Leyland is keen to avoid the press getting wind of this. I suggest you begin by questioning some of young Rupert‘s friends. He was a member of the Esoterics, one of the smaller gentlemen‘s clubs. There is a Hansom cab waiting for you outside. The driver will take you there.”"
+                    ],
+                    "triggers": [
+                        {
+                            "event": "arrived"
+                        }
+                    ]
+                },
+                "case-3-done": {
+                    "lines": [
+                        "The Chief Inspector finishes reading your report, places it on the desk before him, then holds his head in his hands.\n“Are you trying to make me angry, Inspector Forrester?”\n“Sorry, Sir,” you shrug. “I am just writing what happened, what I saw in Fortescue‘s rooms.”\n“The young man is no longer missing. His body has been found. The case is closed. That is all that matters.”\n“If you say so, Sir,” you mutter. "
+                    ],
+                    "triggers": [
+                        {
+                            "event": "arrived"
+                        }
+                    ]
+                },
+                "case-4": {
+                    "lines": [
+                        "The Chief Inspector reaches into a drawer and removes a file. He lays it on the desk and places his hands on it protectively.\n“I believe this case will interest you, Inspector. Young Rupert Fortescue was not the only person to purchase suspicious items from Maitland‘s Antiquities and Curios… I think it is high time you paid Mister Charles Maitland a visit, don‘t you? The cab is waiting outside."
+                    ],
+                    "triggers": [
+                        {
+                            "event": "arrived"
+                        }
+                    ]
+                }
+                
+            }
+        }
+    }
+
+}

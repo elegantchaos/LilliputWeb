@@ -1,0 +1,125 @@
+{
+    "hub.forrester-office": {
+        "traits": ["location"],
+        "descriptions": {
+            "definite": "your small office",
+            "location": "Your office is a small, cold room. One side of the room is given over to your desk. A small mirror hangs on the wall. Pale light filters through the grimy window, along with a draught that leaves the room downright uncomfortable in these cold months."
+        },
+        "exits": {
+            "east": "hub.corridor"
+        },
+        "aware": true
+    },
+    
+    "hub.bullets": {
+        "traits": ["movable"],
+        "names": ["bullets"],
+        "descriptions": {
+            "definite": "the bullets",
+            "detailed": "Large .577 rounds for your pistol.",
+            "indefinite": "some bullets"
+        },
+        "location": "hub.forrester-desk",
+    },
+
+
+    "hub.flask": {
+        "traits": ["movable"],
+        "names": ["flask", "hip flask"],
+        "descriptions": {
+            "definite": "the flask",
+            "detailed": "A battered old hip flask. Disappointingly, it is empty.",
+            "indefinite": "a hip flask",
+        },
+        "location": "hub.forrester-desk",
+    },
+
+    "hub.matches": {
+        "traits": ["movable"],
+        "names": ["matches", "matchbox", "match box"],
+        "descriptions": {
+            "indefinite": "a box of matches",
+            "definite": "the matches",
+            "detailed": "A box of matches. Strangely, however many matches you use, it never seems to be empty."
+        },
+        "location": "hub.forrester-desk",
+    },
+
+    "hub.mirror": {
+        "descriptions": {
+            "definite": "the mirror",
+            "detailed": "This small mirror was hanging on the wall when you were assigned this room to use as your office. Dusty and tarnished, it has seen better days but you are still able to catch a glimpse of your reflection in it. Streaks of grey have appeared in your dark unruly hair in recent years. You spend a moment tugging at the edges of your thick moustache before your hand moves self-consciously to  your nose. Broken years ago, it remains flattened and crooked.",
+            "indefinite": "a small mirror"
+        },
+        "location": "hub.forrester-office"
+    },
+
+    "hub.pistol": {
+        "traits": ["movable", "usable"],
+        "names": ["pistol", "gun", "webley", "boxer"],
+        "descriptions": {
+            "indefinite": "a pistol",
+            "definite": "the pistol",
+            "detailed": "Your Webley Boxer, a veritable hand-cannon.",
+        },
+        "location": "hub.forrester-desk",
+        "handlers": [
+            {
+                "triggers": [
+                    { "when": "event", "is": "used" }
+                ],
+                "actions": [
+                    { "output": "You raise the pistol and fire. The gun roars four times and the bullets strike the beast. The monster shrieks and slumps to the ground. It lies still on the lawn, blood pooling beneath it.\n\nYou walk towards the body and give it an experimental nudge with your foot. You roll the corpse over to get a better look at it. The beast of Bray manor is dead. It wears a fine necklace, a small gold heart inscribed with the the letters “C.B.”.\n\nYou pull the chain from the creature’s neck and trudge back to the waiting Hansom cab." },
+                    { "move": "bray.front-yard" },
+                    { "set": "mission", "of": "player", "to": "bray-done" }
+                ]
+            }
+        ]
+    },
+
+    "hub.forrester-window": {
+        "descriptions": {
+            "definite": "the window",
+            "detailed": "The window does not open but a large crack in one of the panes allows a draught into the room. It is enough to make the room uncomfortably cold in the winter, but insufficient to provide relief from how stuffy the room can get in the summer.\n\n                    Outside, you can see a Hansom cab waiting by the pavement. The driver smokes a cigarette as he feeds the horse an apple.\n                ",
+            "indefinite": "a dusty window"
+        },
+        "location": "hub.forrester-office"
+    },
+
+    "hub.forrester-desk": {
+        "traits": ["openable"],
+        "descriptions": {
+            "contentEmpty": "The desk drawer is open, and empty.",
+            "contentPrefix": "It contains",
+            "contentPrefix-location": "The desk drawer is open. It contains",
+            "definite": "the desk",
+            "detailed": "The desk is cluttered with half-written reports, old newspapers and an empty cup that once contained coffee.",
+            "indefinite": "your desk",
+            "not-open": "It has one large drawer, which is currently closed.",
+            "open": "It has one large drawer, which is currently open.",
+            "open-changed-false": "You shove the drawer closed.",
+            "open-changed-true": "The drawer is a bit stiff, but you eventually wrestle it open.",
+            "open-already-false": "The desk drawer is already closed.",
+            "open-already-true": "The drawer is already open."
+        },
+        "location": "hub.forrester-office",
+        "names": [
+            "desk",
+            "drawer",
+            "your desk"
+        ],
+        "showContent": "open",
+        "showEmpty": true
+    },
+
+    "hub.forrester-coat": {
+        "traits": ["movable", "wearable"],
+        "location": {"location": "player", "position": "worn"},
+        "descriptions": {
+            "contentPrefix": "In the pockets you find",
+            "definite": "the greatcoat",
+            "detailed": "A long greatcoat. It's warm, but has seen better days.",
+            "indefinite": "a long greatcoat"
+        }
+    },
+}

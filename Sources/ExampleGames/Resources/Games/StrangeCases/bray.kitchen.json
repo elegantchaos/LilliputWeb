@@ -1,0 +1,33 @@
+{
+    
+    "bray.kitchen": {
+        "traits": ["location"],
+        "descriptions": {
+            "definite": "the kitchen",
+            "location": "Dirty plates are piled high on the table in the centre of the kitchen.",
+            "location.suffix": " There is a door that leads into a pantry.",
+            "contains.bray.pan": " A squat black iron stove sits in the corner, a battered and dented pan rests on top.",
+            "missing.bray.pan": " A squat black iron stove sits in the corner."
+            
+        },
+        
+        "exits": {
+            "east": "bray.hall",
+            "south": "bray.pantry"
+        },
+    },
+    
+    "bray.pan": {
+        "traits": ["movable"],
+        "names": ["pan", "battered pan"],
+        "descriptions": {
+            "definite": "the pan",
+            "indefinite": "a battered pan",
+            "detailed": "You remove the lid of the pan and look inside. There is a coagulated grey mass at the bottom. It might once have been porridge, but it could just as easily have been some sort of a stew. You are not in any kind of hurry to sample it.",
+            "drop.bray.kitchen": "You put the pan back onto the stove.",
+            "drop": "You put the pan down."
+        },
+        "location": "bray.kitchen"
+    },
+    
+}

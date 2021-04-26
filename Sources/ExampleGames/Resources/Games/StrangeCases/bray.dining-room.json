@@ -1,0 +1,86 @@
+{
+    
+    "bray.dining-room": {
+        "traits": ["location"],
+        "descriptions": {
+            "definite": "the dining room",
+            "location": "You notice the foul smell of decay the moment you step into the dining room. A large oak table runs the length of the room. There is a grand piano close to the door. At the other end of the room, tattered curtains hang in front of another door that leads into the garden."
+        },
+        "exits": {
+            "north": "bray.garden",
+            "west": "bray.hall"
+        },
+    },
+    
+    "bray.garden-door": {
+        "traits": ["portal", "lockable"],
+        "names": ["door", "garden door"],
+        "descriptions": {
+            "indefinite": "a door",
+            "definite": "the door",
+            "detailed": "This door leads into the garden. The door is locked but there is no key. There is a small window looking outside. Looking through the thick glass of the window, you can make out something moving in the bushes at the far end of the garden.",
+            "exit": "through a door",
+            "not-locked": " The door is unlocked.",
+            "locked": "The garden door appears to be locked."
+        },
+        "links": [
+            "bray.dining-room",
+            "bray.garden"
+        ],
+        "locked": true,
+        "requires": "bray.garden-key"
+    },
+    
+    "bray.piano": {
+        "traits": ["openable", "usable", "playable"],
+        "names": ["piano"],
+        "descriptions": {
+            "definite": "the piano",
+            "indefinite": "a piano",
+            "contentPrefix": "The piano contains",
+            "detailed": "The foul smell is stronger here. The piano was once a fine one but, as with so much in his house, it has been neglected and has fallen into a state of disrepair.",
+            "not-open": " The lid of the piano is closed.",
+            "open": " There is a dead body stuffed into the piano. The smell is terrible and makes you retch.",
+            "open-changed-true": " As you open the piano, the smell gets worse still.",
+            "play": "You press a couple of the ivory keys but the piano barely makes a sound. It is as though something is muffling the strings inside.",
+            "use": "You press a couple of the ivory keys but the piano barely makes a sound. It is as though something is muffling the strings inside."
+        },
+        "location": "bray.dining-room",
+        "showContentWhen": "open"
+    },
+    
+    "bray.body": {
+        "names": ["body", "dead body"],
+        "descriptions": {
+            "indefinite": "a body",
+            "definite": "the body",
+            "contentPrefix": "In one of the body's suit pockets, you find",
+            "detailed": "This is the body of a man. Although it is hard to accurately estimate his age due to the state of decay, the white hair leads you to believe this was an older gentleman. Could this be John Bray, the father of the house? Something appears to have clawed at his face and chest, and these dreadful injuries are almost certainly what killed him. The man wears what was once a fine tweed suit, now stained with his own blood."
+        },
+        "location": "bray.piano",
+        "showContentWhen": "examined"
+    },
+    
+    "bray.table": {
+        "names": ["table"],
+        "descriptions": {
+            "indefinite": "a large table",
+            "definite": "the table",
+            "detailed": "This is a large wooden table that takes up much of the room. It could easily seat twenty people around it. Clearly, this house was once entertained large numbers of guests."
+        },
+        "location": "bray.dining-room"
+    },
+    
+    "bray.study-key": {
+        "names": ["key", "steel key"],
+        "traits": ["movable"],
+        "descriptions": {
+            "indefinite": "a steel key",
+            "definite": "the steel key",
+            "detailed": "A steel key.",
+            "unlocks": "The drawer needs a key of some sort."
+        },
+        "location": "bray.body"
+    },
+    
+}

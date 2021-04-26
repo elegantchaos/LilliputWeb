@@ -1,0 +1,23 @@
+{
+   
+    "bray.garden": {
+        "traits": ["location"],
+        "descriptions": {
+            "definite": "the garden",
+            "location": "The pale light of the moon casts long shadows on the overgrown lawn of the garden. A cold wind blows and you turn the collar of your coat up against it. There is movement in the bushes at the far end of the garden."
+        },
+        "exits": {
+            "south": "bray.dining-room"
+        },
+    },
+    
+    "bray.bushes": {
+        "names": ["bush", "bushes"],
+        "descriptions": {
+            "definite": "the bushes",
+            "indefinite": "some bushes",
+            "detailed": "As you approach the bushes, you hear a low growl. Before you can react, a large, shaggy form bursts forth from the hydrangea bushes. You stagger back, your heart pounding in your chest. The creature snarls and begins to shamble towards you."
+        },
+        "location": "bray.garden"
+    }
+}

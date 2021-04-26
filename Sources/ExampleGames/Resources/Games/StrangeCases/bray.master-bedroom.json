@@ -1,0 +1,44 @@
+{
+   
+    "bray.master-bedroom": {
+        "traits": ["location"],
+        "descriptions": {
+            "definite": "the master bedroom",
+            "location": "A four poster bed dominates this cold, gloomy room. The window on the north wall of this room is shattered and the wind makes the tattered velvet curtains dance."
+        },
+        "exits": {
+            "west": "bray.upper-corridor",
+            "south": "bray.study"
+        },
+    },
+
+    "bray.master-bedroom-window": {
+        "names": ["window"],
+        "descriptions": {
+            "indefinite": "a window",
+            "definite": "the window",
+            "detailed": "The window is utterly shattered, a few shards of glass remaining in the edge of the frame. From the broken glass on the floor, it appears to have been broken from the outside. Something large came through this window, but what? It is too high to consider jumping from the window and there are no visible means of climbing down to the garden from here."
+        },
+        "location": "bray.master-bedroom"
+    },
+
+    
+    "bray.study-door": {
+        "traits": ["portal", "lockable"],
+        "names": ["door", "study door"],
+        "descriptions": {
+            "indefinite": "a door",
+            "definite": "the door",
+            "detailed": "The doorknob is made of polished steel.",
+            "exit": "through a door",
+            "not-locked": " The door is unlocked.",
+            "locked": " The door appears to be locked."
+        },
+        "links": [
+            "bray.master-bedroom",
+            "bray.study"
+        ],
+        "locked": true,
+        "requires": "bray.study-key"
+    },
+}

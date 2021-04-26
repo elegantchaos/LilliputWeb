@@ -1,0 +1,25 @@
+{
+    "hub.corridor": {
+        "traits": ["location"],
+        "descriptions": {
+            "definite": "the corridor",
+            "indefinite": "a corridor",
+            "location": "You stand in the wood-paneled corridor of the police house."
+        },
+        "exits": {
+            "east": "hub.constables-room",
+            "north": "hub.pardoe-office",
+            "south": "hub.street",
+            "west": "hub.forrester-office"
+        }
+    },
+
+    "player": {
+        "traits": ["player"],
+        "deferredLocation": "hub.corridor",
+        "descriptions": {
+            "definite": "Edmund Forrester",
+            "detailed": "Your name is Edmund Forrester."
+        }
+    },
+}

@@ -1,0 +1,43 @@
+{
+    "bray.bathroom": {
+        "traits": ["location"],
+        "descriptions": {
+            "definite": "The bathroom",
+            "location": "The bathroom is well-equipped but is in a dreadful state. There is a brass bathtub, tarnished and dull. The mirror above the sink has been shattered, as have a number of the tiles on the walls."
+        },
+        "exits": {
+            "south": "bray.upper-corridor"
+        },
+    },
+    
+    "bray.sink": {
+        "names": ["sink"],
+        "descriptions": {
+            "indefinite": "a sink",
+            "definite": "the sink",
+            "detailed": "Shards of the broken mirror lie in the sink. Several of them appear to be stained with dried blood. Someone hurt themself when they broke this mirror.",
+        },
+        "location": "bray.bathroom"
+    },
+
+    "bray.bath": {
+        "names": ["bath"],
+        "descriptions": {
+            "indefinite": "a bath",
+            "definite": "the bath",
+            "detailed": "The brass bathtub is deep but, as with so much in this house, it has lost its lustre. A few inches of stagnant water can be seen at the bottom of the tub.",
+        },
+        "location": "bray.bathroom"
+    },
+
+    "bray.mirror": {
+        "names": ["mirror", "broken mirror"],
+        "descriptions": {
+            "indefinite": "a broken mirror",
+            "definite": "the mirror",
+            "detailed": "The mirror hangs above the sink but has been broken. One small piece remains in the wooden frame.",
+        },
+        "location": "bray.bathroom"
+    },
+
+}

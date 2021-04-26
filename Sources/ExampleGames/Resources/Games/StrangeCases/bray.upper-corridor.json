@@ -1,0 +1,19 @@
+{
+    "bray.upper-corridor": {
+        "traits": ["location"],
+        "descriptions": {
+            "indefinite": "a landing",
+            "definite": "the landing",
+            "location": "The landing is dark and dusty. The walls are stained with damp and the wallpaper peels off in places. There are a number of doors to choose from. A small, rickety staircase leads up to the attic."
+        },
+        "exits": {
+            "down": "bray.hall",
+            "east": "bray.master-bedroom",
+            "north": "bray.bathroom",
+            "south": "bray.bedroom",
+            "up": "bray.attic",
+            "west": "bray.nursery"
+        },
+        "aware": true
+    }
+}

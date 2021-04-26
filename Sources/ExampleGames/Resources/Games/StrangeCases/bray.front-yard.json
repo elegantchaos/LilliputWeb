@@ -1,0 +1,14 @@
+{
+   
+    "bray.front-yard": {
+        "traits": ["location"],
+        "descriptions": {
+            "definite": "the front yard",
+            "location": "You stand on the cobblestones of the yard. The moon peeks out from behind a cloud and a chill wind blows. The heavy wooden door leads into the manor. A shiver runs up your spine but you know it is not because you are cold. There is something wrong with this place."
+        },
+        "exits": {
+            "north": "bray.hall",
+            "south": "hub.cab"
+        },
+    },
+}

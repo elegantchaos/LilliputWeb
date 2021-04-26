@@ -1,0 +1,45 @@
+{
+    "bray.bedroom": {
+        "traits": ["location"],
+        "descriptions": {
+            "definite": "a bedroom",
+            "location": "The wallpaper in this room hangs off the walls in thin strips. There is a single bed in this room. The mattress is slashed and torn, the straw stuffing pulled out and scattered on the floor. ",
+            "contains.bray.diary": " On a small bedside table sits what looks like a diary.",
+        },
+        "exits": {
+            "north": "bray.upper-corridor"
+        },
+    },
+
+    "bray.single-bed": {
+        "names": ["bed"],
+        "descriptions": {
+            "indefinite": "a single bed",
+             "definite": "the bed",
+            "detailed": "The bed is in a pitiful state. It looks as though the mattress and sheets have been attacked by a wild animal. There are deep gouges in the mattress, from which the straw stuffing has been torn.",
+        },
+        "location": "bray.bedroom"
+    },
+
+    "bray.wallpaper": {
+        "names": ["wallpaper"],
+        "descriptions": {
+            "indefinite": "some torn wallpaper",
+             "definite": "the wallpaper",
+            "detailed": "The wallpaper is not peeling from the walls due to damp. Something has clawed at it.",
+        },
+        "location": "bray.bedroom"
+    },
+
+    "bray.diary": {
+        "traits": ["movable"],
+        "names": ["diary"],
+        "descriptions": {
+            "indefinite": "a diary",
+            "definite": "the diary",
+            "detailed": "The diary belongs to Cecile Bray. The last entry reads: 'Sunday 11th May 1879. It was only a matter of time. After the death of little Amelia, mother could not bear to stay and so has fled to stay with her sister in Dorking. Now the staff are getting nervous. The cook refuses to stay after the sun begins to set, so Father and I eat cold cuts and cheese for supper every evening. Soon it will be just the two of us left in this place. I am sure he knows it is me, but the stubborn old fool refuses to see the truth. The first time it happened, I was scared and ashamed. I have grown so accustomed to the change now that I barely notice it. Though I cannot bear to look at myself when it happens, I welcome the freedom that comes with it. The cool earth beneath my bare feet, the exhilaration of the chase, the power in my limbs, the taste of warm blood on my lips. I realise now that this is not a curse, but a gift.'",
+        },
+        "location": "bray.bedroom"
+    },
+
+}

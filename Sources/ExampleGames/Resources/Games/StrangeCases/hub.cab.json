@@ -1,0 +1,74 @@
+{
+    "hub.cab": {
+        "traits": ["location"],
+        "descriptions": {
+            "definite": "the Hansom Cab",
+            "indefinite": "a Hansom Cab",
+            "detailed": "It might once have been a hansome Handsom cab, but those days are long-gone."
+        },
+        
+        "dontLookWhenArriving": true,
+        
+        "location": "hub.street",
+        
+        "exits": {
+        },
+        
+        "handlers": [
+            {
+                "triggers": [
+                    { "when": "playerArrived" },
+                    { "when": "mission", "of": "player", "is": null }
+                ],
+                "actions": [
+                    { "output": "It is probably not wise to leave without first speaking to the Chief Inspector." },
+                    { "move": "hub.street" }
+                ]
+            },
+            {
+                "triggers": [
+                    { "when": "playerArrived" },
+                    { "when": "from", "of": "event", "is": "hub.street" },
+                    { "when": "mission", "of": "player", "is": "bray" }
+                ],
+                "actions": [
+                    { "output": "The driver of the Hansom cab grins as you approach and flicks his cigarette end into the gutter,\n\n“You Forrester then?” he asks.\n\n“Inspector Forrester,” you reply as you climb into the cab. “Take me to Bray Manor.”\n\n“Make yourself comfortable,” the driver answers, clambering into his seat at the rear of the vehicle.\n\nThe journey to Bray Manor is a lengthy one. The Hansom cab rattles through the city streets and then bumps along the rough roads of the surrounding countryside. The sun is sinking low as the cab begins the slow climb up the hill that casts a dark shadow over the small village of Featherwell. Sitting atop the hill is Bray Manor. Without a single window illuminated, the large house is shrouded in gloom.\n\nThe cab rolls to a stop in the large cobbled yard of the house and you step out into the twilight." },
+                    { "move": "bray.front-yard", "inVehicle": true }
+                ]
+            },
+            {
+                "triggers": [
+                    { "when": "playerArrived" },
+                    { "when": "from", "of": "event", "is": "hub.street" },
+                    { "when": "mission", "of": "player", "is": "bray-done" }
+                ],
+                "actions": [
+                    { "output": "<placeholder - report back to Pardoe>" },
+                    { "move": "hub.street", "inVehicle": true }
+                ]
+            },
+            {
+                "triggers": [
+                    { "when": "playerArrived" },
+                    { "when": "from", "of": "event", "is": "bray.front-yard" },
+                    { "when": "mission", "of": "player", "is": "bray" }
+                ],
+                "actions": [
+                    { "output": "<placeholder - finish mission before returning to the police house>" },
+                    { "move": "bray.front-yard" }
+                ]
+            },
+            {
+                "triggers": [
+                    { "when": "playerArrived" },
+                    { "when": "from", "of": "event", "is": "bray.front-yard" },
+                    { "when": "mission", "of": "player", "is": "bray-done" }
+                ],
+                "actions": [
+                    { "output": "<placeholder - cab back to the police house>" },
+                    { "move": "hub.street", "inVehicle": true }
+                ]
+            },
+        ]
+    },
+}

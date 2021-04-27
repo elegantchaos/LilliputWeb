@@ -14,10 +14,10 @@ struct Site: Codable {
 }
 
 struct RenderContext<Page>: Codable where Page: LeafPage {
-    internal init(page: Page, user: User?, error: String?) {
+    internal init(page: Page, user: User?, error: String?, game: GameConfiguration) {
         let file = String(describing: Page.self)
 
-        self.site = Site(title: "Strange Cases")
+        self.site = Site(title: game.name)
         self.meta = page.meta(for: user)
         self.file = file
         self.page = page
@@ -37,7 +37,7 @@ struct RenderContext<Page>: Codable where Page: LeafPage {
 
 extension Request {
     func render<T>(_ page: T, user: User? = nil, error: Error? = nil) -> EventLoopFuture<Response> where T: LeafPage {
-        let context = RenderContext(page: page, user: user, error: error?.localizedDescription)
+        let context = RenderContext(page: page, user: user, error: error?.localizedDescription, game: application.game)
         return view.render(context.file, context).encodeResponse(for: self)
     }
 }

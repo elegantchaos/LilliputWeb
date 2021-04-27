@@ -7,11 +7,15 @@ final class AppTests: XCTestCase {
     func testHelloWorld() throws {
         let app = Application(.testing)
         defer { app.shutdown() }
-        try configure(app, game: GameConfiguration(name: "", url: LilliputExamples.urlForGame(named: "ChairTest")!))
+        
+        let name = "ChairTest"
+        let url = LilliputExamples.urlForGame(named: name)!
+        let game = GameConfiguration(name: name, url: url)
+        try configure(app, game: game)
 
-        try app.test(.GET, "hello") { res in
+        try app.test(.GET, "/") { res in
             XCTAssertEqual(res.status, .ok)
-            XCTAssertEqual(res.body.string, "Hello, world!")
+            XCTAssertTrue(res.body.string.contains(game.name))
         }
     }
 }

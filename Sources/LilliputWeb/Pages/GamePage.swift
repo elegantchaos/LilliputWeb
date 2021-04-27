@@ -19,7 +19,7 @@ struct GamePage: LeafPage {
         }
     }
     
-    init(user: User? = nil) {
+    init(user: User? = nil, game: GameConfiguration) {
         let history: [String]
         if let user = user {
             history = user.history.split(separator: "\n").compactMap({ String($0) })
@@ -27,7 +27,7 @@ struct GamePage: LeafPage {
             history = []
         }
         
-        let lines = WebDriver.run(history: history)
+        let lines = WebDriver.run(history: history, url: game.url)
         self.transcript = lines.map({ TranscriptLine($0)})
     }
     

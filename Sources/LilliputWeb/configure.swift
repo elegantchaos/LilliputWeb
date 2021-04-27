@@ -6,7 +6,7 @@ import Leaf
 import LeafKit
 
 // configures your application
-public func configure(_ app: Application) throws {
+public func configure(_ app: Application, game: GameConfiguration) throws {
 
     if let databaseURL = Environment.get("DATABASE_URL"), var postgresConfig = PostgresConfiguration(url: databaseURL) {
         postgresConfig.tlsConfiguration = .forClient(certificateVerification: .none)
@@ -46,8 +46,35 @@ public func configure(_ app: Application) throws {
     app.users.use { req in DatabaseUserRepository(database: req.db) }
     app.tokens.use { req in DatabaseTokenRepository(database: req.db) }
 
+    app.game = game
+    
     if app.environment == .development {
         try app.autoMigrate().wait()
     }
 
+}
+
+public struct GameConfiguration {
+    let name: String
+    let url: URL
+
+    public init(name: String, url: URL) {
+        self.name = name
+        self.url = url
+    }
+}
+
+struct GameConfigurationKey: StorageKey {
+    typealias Value = GameConfiguration
+}
+extension Application {
+    var game: GameConfiguration {
+        get {
+            self.storage[GameConfigurationKey.self]!
+        }
+        
+        set {
+            self.storage[GameConfigurationKey.self] = newValue
+        }
+    }
 }

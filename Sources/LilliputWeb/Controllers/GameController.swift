@@ -18,12 +18,13 @@ struct GameController: RouteCollection {
     }
     
     func renderGame(_ req: Request) throws -> EventLoopFuture<Response> {
+        let game = req.application.game
         let token = req.auth.get(Token.self)
         if let token = token {
             return token.$user.get(on: req.db)
-                .flatMap { user in req.render(GamePage(user: user), user: user) }
+                .flatMap { user in req.render(GamePage(user: user, game: game), user: user) }
         } else {
-            return req.render(GamePage())
+            return req.render(GamePage(game: game))
         }
     }
     

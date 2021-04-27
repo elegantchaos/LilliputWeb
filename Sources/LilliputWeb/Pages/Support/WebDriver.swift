@@ -51,11 +51,20 @@ class WebDriver: Driver {
         }
     }
     
+    static func defaultURL() -> URL {
+        guard let url = Bundle.main.url(forResource: "Game", withExtension: nil) else {
+            fatalError("Couldn't find game resources.")
+        }
+        
+        return url
+    }
+    
     static func run(history: [String], url: URL? = nil) -> [Line] {
         let driver = WebDriver()
         let engine = Engine(driver: driver)
         
-        engine.load(url: url ?? URL(fileURLWithPath: "/Users/developer/Developer/Projects/StrangeCases/Sources/Cases/Resources/Data/Game"))
+        
+        engine.load(url: url ?? defaultURL())
         
         driver.input = history
         engine.run()

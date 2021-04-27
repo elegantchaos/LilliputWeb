@@ -51,7 +51,7 @@ struct UserController: RouteCollection {
             .flatMap { (tokensAndSessions, users) in
                 let (tokens, sessions) = tokensAndSessions
                 let page = ProfilePage(user: user, users: users, tokens: tokens, sessions: sessions)
-                return req.render(page)
+                return req.render(page, user: user)
             }
     }
     

@@ -1,13 +1,13 @@
 
 
 struct LoginPage: LeafPage {
-    var file: String
-    var meta: PageMetadata
     let request: LoginRequest?
     
-    init(request: LoginRequest? = nil, error: Error? = nil) {
-        self.file = String(describing: Self.self)
-        self.meta = .init("Login", description: "Login", error: error?.localizedDescription)
+    init(request: LoginRequest? = nil) {
         self.request = request
+    }
+    
+    func meta(for user: User?) -> PageMetadata {
+        .init("Login", description: "Login")
     }
 }

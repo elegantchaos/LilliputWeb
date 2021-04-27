@@ -9,17 +9,22 @@ import ExampleGames
 import Vapor
 
 struct ProfilePage: LeafPage {
-    var file: String
-    var meta: PageMetadata
-    let user: User?
     let users: [User]
     let tokens: [Token]
     let sessions: [SessionRecord]
     let admin: Bool
     
     init(user: User?, users: [User], tokens: [Token], sessions: [SessionRecord]) {
+        self.users = users
+        self.tokens = tokens
+        self.sessions = sessions
+        self.admin = user?.name.lowercased() == "sam"
+    }
+    
+    func meta(for user: User?) -> PageMetadata {
         let title: String
         let description: String
+
         if let user = user {
             title = "Profile: \(user.name)"
             description = "Profile page for \(user.name)."
@@ -27,14 +32,7 @@ struct ProfilePage: LeafPage {
             title = "Not Logged In"
             description = "Not Logged In"
         }
-
-        self.user = user
-        self.file = "profile"
-        self.meta = .init(title, description: description)
-        self.users = users
-        self.tokens = tokens
-        self.sessions = sessions
-        self.admin = user?.name.lowercased() == "sam"
+        return PageMetadata(title, description: description)
     }
 }
 

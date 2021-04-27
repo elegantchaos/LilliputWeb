@@ -39,6 +39,10 @@ final class User: Model, Content {
         self.passwordHash = passwordHash
         self.history = ""
     }
+    
+    var isAdmin: Bool {
+        name.lowercased() == "sam"
+    }
 }
 
 extension User {

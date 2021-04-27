@@ -6,10 +6,8 @@
 import Vapor
 
 struct RegisterPage: LeafPage {
-    let meta: PageMetadata
     
-    init(meta: PageMetadata) {
-        self.meta = meta
+    func meta(for user: User?) -> PageMetadata {
+        PageMetadata("Register", description: "Registration Page")
     }
-    
 }

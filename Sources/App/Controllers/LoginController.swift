@@ -58,13 +58,11 @@ struct LoginController: RouteCollection {
                 .thenRemoveTokens(with: req)
                 .thenGenerateToken(with: req)
                 .thenRedirect(with: req, to: "/")
-                .flatMapError { error in
-                    let page = LoginPage(request: login, error: error)
-                    return req.render(page)
+                .flatMapError { e in
+                    return req.render(LoginPage(request: login), error: e)
                 }
         } catch {
-            let page = LoginPage()
-            return req.render(page)
+            return req.render(LoginPage())
         }
     }
 }

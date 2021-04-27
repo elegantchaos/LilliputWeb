@@ -6,12 +6,38 @@
 import Vapor
 
 protocol LeafPage: Codable {
-    var meta: PageMetadata { get }
+    func meta(for user: User?) -> PageMetadata
+}
+
+struct Site: Codable {
+    let title: String
+}
+
+struct RenderContext<Page>: Codable where Page: LeafPage {
+    internal init(page: Page, user: User?, error: String?) {
+        let file = String(describing: Page.self)
+
+        self.site = Site(title: "Strange Cases")
+        self.meta = page.meta(for: user)
+        self.file = file
+        self.page = page
+        self.user = user
+        self.error = error
+        self.isAdmin = user?.isAdmin ?? false
+    }
+    
+    let site: Site
+    let meta: PageMetadata
+    let file: String
+    let page: Page
+    let user: User?
+    let error: String?
+    let isAdmin: Bool
 }
 
 extension Request {
-    func render<T>(_ page: T) -> EventLoopFuture<Response> where T: LeafPage {
-        let name = String(describing: T.self)
-        return view.render(name, page).encodeResponse(for: self)
+    func render<T>(_ page: T, user: User? = nil, error: Error? = nil) -> EventLoopFuture<Response> where T: LeafPage {
+        let context = RenderContext(page: page, user: user, error: error?.localizedDescription)
+        return view.render(context.file, context).encodeResponse(for: self)
     }
 }

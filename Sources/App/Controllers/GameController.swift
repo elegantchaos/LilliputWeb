@@ -21,15 +21,10 @@ struct GameController: RouteCollection {
         let token = req.auth.get(Token.self)
         if let token = token {
             return token.$user.get(on: req.db)
-                .flatMap { user in self.renderGamePage(req, for: user) }
+                .flatMap { user in req.render(GamePage(user: user), user: user) }
         } else {
-            return self.renderGamePage(req)
+            return req.render(GamePage())
         }
-    }
-    
-    func renderGamePage(_ req: Request, for user: User? = nil) -> EventLoopFuture<Response> {
-        let page = GamePage(user: user)
-        return req.render(page)
     }
     
     func updateHistory(_ req: Request, user: User, input: InputRequest) -> EventLoopFuture<Void> {

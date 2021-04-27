@@ -30,8 +30,9 @@ public func configure(_ app: Application, game: GameConfiguration) throws {
     app.leaf.cache.isEnabled = app.environment.isRelease
     
     let path = Bundle.module.url(forResource: "Views", withExtension: nil)!.path
+    print("LilliputWeb built-in views path is: \(path)")
     let source = NIOLeafFiles(fileio: app.fileio,
-                              limits: .default,
+                              limits: [.toVisibleFiles, .requireExtensions],
                               sandboxDirectory: path,
                               viewDirectory: path)
 

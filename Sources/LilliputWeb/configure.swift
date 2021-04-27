@@ -32,7 +32,7 @@ public func configure(_ app: Application, game: GameConfiguration) throws {
     let path = Bundle.module.url(forResource: "Views", withExtension: nil)!.path
     print("LilliputWeb built-in views path is: \(path)")
     let source = NIOLeafFiles(fileio: app.fileio,
-                              limits: [.toVisibleFiles, .requireExtensions],
+                              limits: [.toSandbox, .requireExtensions], // Heroku bundle files are inside `.swift-bin`, which can be mistaken for being invisible
                               sandboxDirectory: path,
                               viewDirectory: path)
 

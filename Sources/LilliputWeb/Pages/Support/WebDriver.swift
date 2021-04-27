@@ -55,7 +55,7 @@ class WebDriver: Driver {
         let driver = WebDriver()
         let engine = Engine(driver: driver)
         
-        engine.load(url: url ?? URL(fileURLWithPath: "Resources/Games/StrangeCases"))
+        engine.load(url: url ?? URL(fileURLWithPath: "/Users/developer/Developer/Projects/StrangeCases/Sources/Cases/Resources/Data/Game"))
         
         driver.input = history
         engine.run()

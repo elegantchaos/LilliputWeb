@@ -1,0 +1,31 @@
+#extend("base"):
+    #export("body"):
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="form-group transcript" style="div.transcript { overflow: scroll; }">
+                #for(line in transcript):
+                   <div class="line">#(line)</div>
+                #endfor
+                </div>
+
+                <form action="/input" method="POST">
+                  <div class="form-group">
+                    <input type="text" name="command" class="form-control" id="command" value="#(request.command)" />
+                    <label for="command">enter a command:</label>
+                  </div>
+                </form>
+
+                #if(user != nil):
+                <h4>Actions</h4>
+                <div><a href="/reset">Reset Game</a></div>
+                </div>
+                #endif
+
+            </div>
+          </div>
+        </div>
+    #endexport
+#endextend
+

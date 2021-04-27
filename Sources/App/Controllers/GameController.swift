@@ -28,14 +28,8 @@ struct GameController: RouteCollection {
     }
     
     func renderGamePage(_ req: Request, for user: User? = nil) -> EventLoopFuture<Response> {
-        return req.tokens.all()
-            .and(SessionRecord.query(on: req.db).all())
-            .and(req.users.all())
-            .flatMap { (tokensAndSessions, users) in
-                let (tokens, sessions) = tokensAndSessions
-                let page = ProfilePage(user: user, users: users, tokens: tokens, sessions: sessions)
-                return page.render(with: req)
-            }
+        let page = GamePage(user: user)
+        return req.render(page)
     }
     
     func updateHistory(_ req: Request, user: User, input: InputRequest) -> EventLoopFuture<Void> {

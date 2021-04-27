@@ -47,7 +47,7 @@ struct LoginController: RouteCollection {
     
     func renderLogin(_ req: Request) throws -> EventLoopFuture<Response> {
         let page = LoginPage()
-        return page.render(with: req)
+        return req.render(page)
     }
     
     func handleLogin(_ req: Request) throws -> EventLoopFuture<Response> {
@@ -60,11 +60,11 @@ struct LoginController: RouteCollection {
                 .thenRedirect(with: req, to: "/")
                 .flatMapError { error in
                     let page = LoginPage(request: login, error: error)
-                    return page.render(with: req)
+                    return req.render(page)
                 }
         } catch {
-            let page = Page("login", meta: .init("Login", description: "Login Page", error: String(describing: error)))
-            return page.render(with: req)
+            let page = LoginPage()
+            return req.render(page)
         }
     }
 }

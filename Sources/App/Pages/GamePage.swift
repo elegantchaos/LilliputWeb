@@ -1,6 +1,6 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-//  Created by Sam Deane on 01/05/2020.
-//  All code (c) 2020 - present day, Elegant Chaos Limited.
+//  Created by Sam Deane on 27/04/21.
+//  All code (c) 2021 - present day, Elegant Chaos Limited.
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 import Fluent
@@ -42,17 +42,13 @@ class TestDriver: Driver {
     
 }
 
-struct ProfilePage: LeafPage {
+struct GamePage: LeafPage {
     var file: String
     var meta: PageMetadata
     let user: User?
-    let users: [User]
-    let tokens: [Token]
-    let sessions: [SessionRecord]
-    let history: [String]
-    let admin: Bool
+    let transcript: [String]
     
-    init(user: User?, users: [User], tokens: [Token], sessions: [SessionRecord]) {
+    init(user: User?) {
         let title: String
         let description: String
         let history: [String]
@@ -76,15 +72,9 @@ struct ProfilePage: LeafPage {
         driver.finish()
         
         self.user = user
-        self.file = "profile"
+        self.file = "game"
         self.meta = .init(title, description: description)
-        self.users = users
-        self.tokens = tokens
-        self.sessions = sessions
-        self.admin = user?.name.lowercased() == "sam"
-        var output = driver.full
-        output.removeLast(3)
-        self.history = output
+        self.transcript = driver.full.dropLast(3)
     }
 }
 

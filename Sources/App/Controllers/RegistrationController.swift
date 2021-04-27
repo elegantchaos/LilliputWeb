@@ -47,8 +47,8 @@ struct RegistrationController: RouteCollection {
     }
     
     func renderRegister(req: Request) throws -> EventLoopFuture<Response> {
-        let page = Page("register", meta: .init("Register", description: "Registration Page"))
-        return page.render(with: req)
+        let page = RegisterPage(meta: .init("Register", description: "Registration Page"))
+        return req.render(page)
     }
     
     func handleRegister(_ req: Request) throws -> EventLoopFuture<Response> {

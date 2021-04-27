@@ -4,10 +4,51 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/style.css">
     <title>#(meta.title)</title>
     <meta name="description" content="#(meta.description)">
   </head>
+
   <body class="container">
+  
+    #if(meta.error):
+    <div class="form-group">
+    <em>#(meta.error)</em>
+    </div>
+    #endif
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">#(meta.site.title)</a>
+
+      <button class="navbar-toggler" type="button"
+       data-toggle="collapse" data-target="#navbarSupportedContent"
+       aria-controls="navbarSupportedContent" aria-expanded="false"
+       aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse"
+       id="navbarSupportedContent">
+       
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item #if(title == "Home page"){active}">
+            <a href="/" class="nav-link">Play</a>
+          </li>
+          
+        </ul>
+        
+        <ul class="nav navbar-nav navbar-right">
+            #if(user == nil):
+            <li class="nav-item"><a href="/register" class="">register</a></li>
+            <li class="nav-item"><a href="/login" class="">login</a></li>
+            #else:
+            <li class="nav-item"><a href="/settings">#(user.name)</a></li>
+            #endif
+        </ul>
+            
+      </div>
+    </nav>
+  
     <main>
         #import("body")
     </main>

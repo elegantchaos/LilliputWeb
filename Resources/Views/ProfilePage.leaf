@@ -12,29 +12,26 @@
                 </div>
                 #endif
 
-                <div class="form-group">
-                #for(line in history):
-                   <div>#(line)</div>
-                #endfor
-                </div>
-
-                <form action="/input" method="POST">
+                <form action="/profile" method="POST">
                   <div class="form-group">
-                    <label for="command">enter a command:</label>
-                    <input type="text" name="command" class="form-control" id="command" value="#(request.command)" />
+                    <label for="email">Name</label>
+                    <input type="name" name="name" class="form-control" id="name" value="#(user.name)" />
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" class="form-control" id="email" value="#(user.email)"/>
+                  </div>
+                  <div class="form-group">
+                    <input type="submit" class="btn btn-block btn-primary" value="Update" />
                   </div>
                 </form>
 
 
                 <h4>Actions</h4>
-                <div><a href="/reset">Reset</a></div>
-                #if(user == nil):
-                <div><a href="/register">Register</a></div>
-                <div><a href="/login">Login</a></div>
-                #else:
-                <div><a href="/settings">#(user.name)</a></div>
-                <div><a href="/logout">Logout</a> (logged in as #(user.name))</div>
+                #if(admin):
+                <div><a href="/admin">Admin</a></div>
                 #endif
+                <div><a href="/logout">Logout</a></div>
                 </div>
 
                 #if(admin):

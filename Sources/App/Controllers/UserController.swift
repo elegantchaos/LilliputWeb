@@ -6,14 +6,19 @@
 import Fluent
 import Vapor
 
+extension PathComponent {
+    static let settings: PathComponent = "settings"
+    static let logout: PathComponent = "logout"
+}
 
 struct UserController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
-        routes.get("settings", use: renderProfile)
-        routes.get("logout", use: performLogout)
+        routes.get(.settings, use: handleGetSettings)
+        routes.put(.settings, use: handleUpdateSettings)
+        routes.get(.logout, use: handleLogout)
     }
     
-    func renderProfile(_ req: Request) throws -> EventLoopFuture<Response> {
+    func handleGetSettings(_ req: Request) throws -> EventLoopFuture<Response> {
         let token = req.auth.get(Token.self)
         if let token = token {
             return token.$user.get(on: req.db)
@@ -22,7 +27,23 @@ struct UserController: RouteCollection {
             return self.renderProfilePage(req)
         }
     }
-    
+
+    func handleUpdateSettings(_ req: Request) throws -> EventLoopFuture<Response> {
+        let token = req.auth.get(Token.self)
+        if let token = token {
+            return token.$user.get(on: req.db)
+                .flatMap { user in self.renderProfilePage(req, for: user) }
+        } else {
+            return self.renderProfilePage(req)
+        }
+    }
+
+    func handleLogout(_ req: Request) throws -> Response {
+        req.auth.logout(User.self)
+        req.session.destroy()
+        return req.redirect(to: "/login")
+    }
+
     func renderProfilePage(_ req: Request, for user: User? = nil) -> EventLoopFuture<Response> {
         return req.tokens.all()
             .and(SessionRecord.query(on: req.db).all())
@@ -30,7 +51,7 @@ struct UserController: RouteCollection {
             .flatMap { (tokensAndSessions, users) in
                 let (tokens, sessions) = tokensAndSessions
                 let page = ProfilePage(user: user, users: users, tokens: tokens, sessions: sessions)
-                return page.render(with: req)
+                return req.render(page)
             }
     }
     
@@ -46,9 +67,4 @@ struct UserController: RouteCollection {
     }
 
 
-    func performLogout(_ req: Request) throws -> Response {
-        req.auth.logout(User.self)
-        req.session.destroy()
-        return req.redirect(to: "/login")
-    }
 }

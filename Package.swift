@@ -17,20 +17,12 @@ let package = Package(
     ],
     targets: [
         .target(name: "App", dependencies: [
-            .target(name: "ExampleGames"),
             .product(name: "Fluent", package: "fluent"),
             .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
             .product(name: "Vapor", package: "vapor"),
             .product(name: "Leaf", package: "leaf"),
             .product(name: "Lilliput", package: "Lilliput"),
         ]),
-        .target(
-            name: "ExampleGames",
-            dependencies: [],
-            resources: [
-                .copy("Resources/Games")
-            ]
-        ),
         .target(name: "Run", dependencies: [
             .target(name: "App"),
         ]),

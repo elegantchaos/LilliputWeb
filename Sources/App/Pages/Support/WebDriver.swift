@@ -4,7 +4,7 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 import Lilliput
-import ExampleGames
+import Foundation
 
 class WebDriver: Driver {
     enum LineType {
@@ -51,11 +51,11 @@ class WebDriver: Driver {
         }
     }
     
-    static func run(history: [String]) -> [Line] {
+    static func run(history: [String], url: URL? = nil) -> [Line] {
         let driver = WebDriver()
         let engine = Engine(driver: driver)
-        let url = ExampleGames.urlForGame(named: "StrangeCases")!
-        engine.load(url: url)
+        
+        engine.load(url: url ?? URL(fileURLWithPath: "Resources/Games/StrangeCases"))
         
         driver.input = history
         engine.run()

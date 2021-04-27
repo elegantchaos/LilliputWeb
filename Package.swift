@@ -17,7 +17,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/elegantchaos/Lilliput.git", from: "1.0.0"),
+        .package(url: "https://github.com/elegantchaos/Lilliput.git", from: "1.0.1"),
 
         // 💧 A server-side Swift web framework.
         .package(url: "https://github.com/vapor/vapor.git", from: "4.44.1"),
@@ -41,9 +41,11 @@ let package = Package(
         ),
         .target(name: "Run", dependencies: [
             .target(name: "LilliputWeb"),
+            .product(name: "LilliputExamples", package: "Lilliput"),
         ]),
         .testTarget(name: "AppTests", dependencies: [
             .target(name: "LilliputWeb"),
+            .product(name: "LilliputExamples", package: "Lilliput"),
             .product(name: "XCTVapor", package: "vapor"),
         ])
     ]

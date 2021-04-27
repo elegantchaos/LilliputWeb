@@ -19,3 +19,11 @@
 /*@media (min-width: 900px) {}*/
 /*@media (min-width: 1200px) {}*/
 /*@media (min-width: 1800px) {}*/
+
+div.line.input {
+    font-weight: bold;
+}
+
+div.line.input p:before {
+    content: "\2192  "
+}

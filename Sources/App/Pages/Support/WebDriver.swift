@@ -7,36 +7,51 @@ import Lilliput
 import ExampleGames
 
 class WebDriver: Driver {
+    enum LineType {
+        case input
+        case output
+        case error
+    }
+    
+    struct Line {
+        let type: LineType
+        let text: String
+    }
+    
     let showOutput = false
     var input: [String] = []
     var output: [String] = []
-    var full: [String] = []
+    var transcript: [Line] = []
+    var current: String = ""
     
     func getInput(stopWords: [String.SubSequence]) -> Input {
         guard let string = input.first else { return Input("quit", stopWords: stopWords)! }
         
         input.remove(at: 0)
-        full.append("> \(string)\n\n")
+        transcript.append(Line(type: .input, text: string))
         return Input(string, stopWords: [])!
     }
     
     func output(_ string: String, newParagraph: Bool) {
-        output.append(string)
-        full.append(string)
+        current.append(string)
         if newParagraph {
-            output.append("\n\n")
-            full.append("\n\n")
+            output.append(current)
+            transcript.append(Line(type: .output, text: current))
+            current = ""
         }
     }
     
     func finish() {
+        if !current.isEmpty {
+            output("", newParagraph: true)
+        }
+        
         if showOutput {
             print(output)
-            print(full.joined())
         }
     }
     
-    static func run(history: [String]) -> [String] {
+    static func run(history: [String]) -> [Line] {
         let driver = WebDriver()
         let engine = Engine(driver: driver)
         let url = ExampleGames.urlForGame(named: "StrangeCases")!
@@ -46,6 +61,6 @@ class WebDriver: Driver {
         engine.run()
         driver.finish()
         
-        return driver.full.dropLast(3)
+        return driver.transcript.dropLast()
     }
 }

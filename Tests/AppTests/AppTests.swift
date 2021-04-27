@@ -8,6 +8,8 @@ final class AppTests: XCTestCase {
         let app = Application(.testing)
         defer { app.shutdown() }
         
+        print(FileManager.default.currentDirectoryPath)
+
         let name = "ChairTest"
         let url = LilliputExamples.urlForGame(named: name)!
         let game = GameConfiguration(name: name, url: url)

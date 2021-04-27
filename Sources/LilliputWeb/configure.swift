@@ -38,7 +38,6 @@ public func configure(_ app: Application, game: GameConfiguration) throws {
     let sources = app.leaf.sources
     try sources.register(source: "builtin", using: source, searchable: true)
     app.leaf.sources = sources
-    print(app.leaf.sources.searchOrder)
 
     // register routes
     try routes(app)

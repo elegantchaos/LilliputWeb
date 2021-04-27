@@ -1,0 +1,38 @@
+#extend("base"):
+#export("body"):
+
+#if(user == nil):
+<div>Welcome to Strange Cases.</div>
+
+<br/>
+
+<div>To play the game, you need to first <a href="/register">register</a> or <a href="/login">log in</a>.</div>
+
+#else:
+<div class="form-group transcript" style="div.transcript { overflow: scroll; }">
+    #for(line in page.transcript):
+        <div class="line #(line.type)">
+        #for(paragraph in line.text):
+            <p>#(paragraph)</p>
+        #endfor
+        </div>
+    #endfor
+</div>
+
+<form action="/input" method="POST">
+    <div class="form-group">
+        <input type="text" name="command" class="form-control" id="command" value="#(request.command)" />
+        <label for="command">enter a command:</label>
+    </div>
+</form>
+#endif
+
+#if(user != nil):
+<h4>Actions</h4>
+<div><a href="/reset">Reset Game</a></div>
+</div>
+#endif
+
+#endexport
+#endextend
+

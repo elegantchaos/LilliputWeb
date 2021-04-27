@@ -1,8 +1,9 @@
+import Foundation
 import Fluent
 import FluentPostgresDriver
-//import FluentSQLiteDriver
 import Vapor
 import Leaf
+import LeafKit
 
 // configures your application
 public func configure(_ app: Application) throws {
@@ -27,6 +28,19 @@ public func configure(_ app: Application) throws {
     // Configure Leaf
     app.views.use(.leaf)
     app.leaf.cache.isEnabled = app.environment.isRelease
+    
+//    let path = Bundle.module.url(forResource: "Views", withExtension: nil)!.path
+//    let source = NIOLeafFiles(fileio: app.fileio,
+//                              limits: .default,
+//                              sandboxDirectory: path,
+//                              viewDirectory: path)
+//
+//    let sources = app.leaf.sources
+//    try sources.register(source: "builtin", using: source, searchable: true)
+//    app.leaf.sources = sources
+
+    print(app.leaf.sources.searchOrder)
+//
 
     // register routes
     try routes(app)

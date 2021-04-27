@@ -5,7 +5,6 @@
 
 import Fluent
 import Lilliput
-import ExampleGames
 import Vapor
 
 struct ProfilePage: LeafPage {

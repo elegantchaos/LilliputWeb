@@ -1,4 +1,4 @@
-import App
+import LilliputWeb
 import Vapor
 
 var env = try Environment.detect()

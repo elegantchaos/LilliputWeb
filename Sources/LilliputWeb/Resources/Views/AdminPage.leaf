@@ -1,0 +1,29 @@
+#extend("base"):
+    #export("body"):
+                <h3 class="card-title">#(meta.title)</h3>
+
+                #if(isAdmin):
+                <h4>Users</h4>
+                #for(user in page.users):
+                   <li>#(user.name) #(user.email)</li>
+                #endfor
+
+                <br />
+
+                <h4>Tokens</h4>
+                #for(token in page.tokens):
+                   <li>#(token.id)</li>
+                #endfor
+
+                <br />
+
+                <h4>Sessions</h4>
+                #for(session in page.sessions):
+                   <li>#(session.id)</li>
+                #endfor
+
+                <br />
+                #endif
+    #endexport
+#endextend
+

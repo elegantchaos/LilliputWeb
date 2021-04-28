@@ -55,7 +55,7 @@ struct RegistrationController: RouteCollection {
         
         return registration.hash(with: req)
             .thenCreateUser(using: registration, with: req)
-            .thenRedirect(with: req, to: "/login")
+            .thenRedirect(with: req, to: .login)
     }
     
 }

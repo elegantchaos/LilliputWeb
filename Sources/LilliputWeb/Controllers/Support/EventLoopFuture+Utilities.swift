@@ -11,6 +11,10 @@ public extension EventLoopFuture {
         flatMap(file: file, line: line, callback)
     }
 
+    func thenRedirect(with request: Request, to: PathComponent) -> EventLoopFuture<Response> {
+        map { _ in request.redirect(to: to) }
+    }
+
     func thenRedirect(with request: Request, to: String) -> EventLoopFuture<Response> {
         map { _ in request.redirect(to: to) }
     }
@@ -22,29 +26,5 @@ public extension EventLoopFuture {
             }
             throw $0
         }
-    }
-}
-
-
-
-// Ok, I was experimenting with operators, I admit it. Move along please. Nothing to see here...
-
-infix operator ==> : LogicalConjunctionPrecedence
-infix operator --> : LogicalConjunctionPrecedence
-infix operator -!-> : LogicalConjunctionPrecedence
-
-public extension EventLoopFuture {
-    static func --> <NewValue>(left: EventLoopFuture<Value>, right: @escaping (Value) -> EventLoopFuture<NewValue>) -> EventLoopFuture<NewValue> {
-        left.flatMap(right)
-    }
-
-    static func ==> <NewValue>(left: EventLoopFuture<Value>, right: @escaping (Value) -> (NewValue)) -> EventLoopFuture<NewValue> {
-        left.map(right)
-    }
-}
-
-extension EventLoopFuture where Value: Vapor.OptionalType {
-    static func -!-> (left: EventLoopFuture<Value>, right: @escaping () -> Error) -> EventLoopFuture<Value.WrappedType> {
-        left.unwrap(or: right())
     }
 }

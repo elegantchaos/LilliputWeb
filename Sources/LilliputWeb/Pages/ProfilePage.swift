@@ -8,16 +8,7 @@ import Lilliput
 import Vapor
 
 struct ProfilePage: LeafPage {
-    let users: [User]
-    let tokens: [Token]
-    let sessions: [SessionRecord]
-    let admin: Bool
-    
-    init(user: User?, users: [User], tokens: [Token], sessions: [SessionRecord]) {
-        self.users = users
-        self.tokens = tokens
-        self.sessions = sessions
-        self.admin = user?.name.lowercased() == "sam"
+    init(user: User?) {
     }
     
     func meta(for user: User?) -> PageMetadata {

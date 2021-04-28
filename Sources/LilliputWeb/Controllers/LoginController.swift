@@ -6,6 +6,10 @@
 import Fluent
 import Vapor
 
+extension PathComponent {
+    static let login: PathComponent = "login"
+}
+
 struct LoginRequest: Content {
     let email: String
     let password: String
@@ -36,12 +40,12 @@ extension LoginRequest: Validatable {
 
 struct LoginController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
-        routes.get("login", use: renderLogin)
+        routes.get(.login, use: renderLogin)
         if let app = routes as? Application {
             let sessionEnabled = routes.grouped(
                 SessionsMiddleware(session: app.sessions.driver)
             )
-            sessionEnabled.post("login", use: handleLogin)
+            sessionEnabled.post(.login, use: handleLogin)
         }
     }
     

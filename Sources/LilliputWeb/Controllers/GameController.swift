@@ -10,11 +10,17 @@ struct InputRequest: Content {
     let command: String
 }
 
+extension PathComponent {
+    static let root: PathComponent = ""
+    static let input: PathComponent = "input"
+    static let reset: PathComponent = "reset"
+}
+
 struct GameController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
-        routes.get("", use: renderGame)
-        routes.post("input", use: performInput)
-        routes.get("reset", use: performReset)
+        routes.get(.root, use: renderGame)
+        routes.post(.input, use: performInput)
+        routes.get(.reset, use: performReset)
     }
     
     func renderGame(_ req: Request) throws -> EventLoopFuture<Response> {
@@ -51,7 +57,7 @@ struct GameController: RouteCollection {
             }
         }
 
-        return req.eventLoop.makeSucceededFuture(req.redirect(to: "/"))
+        return req.redirectFuture(to: .root)
     }
 
     func performReset(_ req: Request) throws -> EventLoopFuture<Response> {
@@ -59,10 +65,10 @@ struct GameController: RouteCollection {
         if let token = token {
             return token.$user.get(on: req.db)
                 .flatMap { user in self.resetHistory(req, user: user) }
-                .thenRedirect(with: req, to: "/")
+                .thenRedirect(with: req, to: .root)
         }
 
-        return req.eventLoop.makeSucceededFuture(req.redirect(to: "/"))
+        return req.redirectFuture(to: .root)
     }
 
 }

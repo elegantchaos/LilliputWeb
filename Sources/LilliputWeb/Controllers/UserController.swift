@@ -31,17 +31,4 @@ struct UserController: RouteCollection {
     func renderProfilePage(_ req: Request, for user: User) -> EventLoopFuture<Response> {
         return req.render(ProfilePage(user: user), user: user)
     }
-    
-    func updateHistory(_ req: Request, user: User, input: InputRequest) -> EventLoopFuture<Void> {
-        user.history.append(input.command)
-        user.history.append("\n")
-        return user.update(on: req.db)
-    }
-
-    func resetHistory(_ req: Request, user: User) -> EventLoopFuture<Void> {
-        user.history = ""
-        return user.update(on: req.db)
-    }
-
-
 }

@@ -18,57 +18,30 @@ extension PathComponent {
 
 struct GameController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
-        routes.get(.root, use: renderGame)
-        routes.post(.input, use: performInput)
-        routes.get(.reset, use: performReset)
+        routes.get(.root, use: withUser(handleGetGame))
+        routes.post(.input, use: requireUser(handlePostInput))
+        routes.get(.reset, use: requireUser(handleReset))
     }
     
-    func renderGame(_ req: Request) throws -> EventLoopFuture<Response> {
+    func handleGetGame(_ req: Request, user: User?) -> EventLoopFuture<Response> {
         let game = req.application.game
-        let token = req.auth.get(Token.self)
-        if let token = token {
-            return token.$user.get(on: req.db)
-                .flatMap { user in req.render(GamePage(user: user, game: game), user: user) }
-        } else {
-            return req.render(GamePage(game: game))
-        }
+        return req.render(GamePage(user: user, game: game), user: user)
     }
     
-    func updateHistory(_ req: Request, user: User, input: InputRequest) -> EventLoopFuture<Void> {
+    func handlePostInput(_ req: Request, user: User) throws -> EventLoopFuture<Response> {
+        let input = try req.content.decode(InputRequest.self)
         user.history.append(input.command)
         user.history.append("\n")
-        return user.update(on: req.db)
+        return user
+            .update(on: req.db)
+            .thenRedirect(with: req, to: "/")
     }
 
-    func resetHistory(_ req: Request, user: User) -> EventLoopFuture<Void> {
+    func handleReset(_ req: Request, user: User) throws -> EventLoopFuture<Response> {
         user.history = ""
-        return user.update(on: req.db)
-    }
-
-    func performInput(_ req: Request) throws -> EventLoopFuture<Response> {
-        let token = req.auth.get(Token.self)
-        if let token = token {
-            do {
-                let input = try req.content.decode(InputRequest.self)
-                return token.$user.get(on: req.db)
-                    .flatMap { user in self.updateHistory(req, user: user, input: input) }
-                    .thenRedirect(with: req, to: "/")
-            } catch {
-            }
-        }
-
-        return req.redirectFuture(to: .root)
-    }
-
-    func performReset(_ req: Request) throws -> EventLoopFuture<Response> {
-        let token = req.auth.get(Token.self)
-        if let token = token {
-            return token.$user.get(on: req.db)
-                .flatMap { user in self.resetHistory(req, user: user) }
-                .thenRedirect(with: req, to: .root)
-        }
-
-        return req.redirectFuture(to: .root)
+        return user
+            .update(on: req.db)
+            .thenRedirect(with: req, to: .root)
     }
 
 }

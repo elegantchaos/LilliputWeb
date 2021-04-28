@@ -22,17 +22,18 @@ extension RouteCollection {
         }
     }
 
-    func requireUser(req: Request, perform: @escaping (Request, User) -> EventLoopFuture<Response>) throws -> EventLoopFuture<Response> {
+    func requireUser(req: Request, perform: @escaping (Request, User) throws -> EventLoopFuture<Response>) throws -> EventLoopFuture<Response> {
         let token = req.auth.get(Token.self)
         if let token = token {
             return token.$user.get(on: req.db)
-                .flatMap { user in perform(req, user) }
+                .flatMapThrowing { user in try perform(req, user) }
+                .flatMap { future in future }
         } else {
             return req.eventLoop.makeSucceededFuture(req.redirect(to: .login))
         }
     }
     
-    func requireUser(_ perform: @escaping (Request, User) -> EventLoopFuture<Response>) -> (Request) throws -> EventLoopFuture<Response> {
+    func requireUser(_ perform: @escaping (Request, User) throws -> EventLoopFuture<Response>) -> (Request) throws -> EventLoopFuture<Response> {
         return { req in
             try requireUser(req: req, perform: perform)
         }

@@ -22,15 +22,8 @@
 <form action="/input" method="POST">
     <div class="form-group">
         <input type="text" name="command" class="form-control" id="command" value="#(request.command)" autofocus />
-        <label for="command">enter a command:</label>
     </div>
 </form>
-#endif
-
-#if(user != nil):
-<h4>Actions</h4>
-<div><a href="/reset">Reset Game</a></div>
-</div>
 #endif
 
 #endexport

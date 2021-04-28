@@ -21,31 +21,10 @@
                 #if(isAdmin):
                 <div><a href="/admin">Admin</a></div>
                 #endif
+
+                <div><a href="/reset">Reset Game</a></div>
                 <div><a href="/logout">Logout</a></div>
                 </div>
-
-                #if(admin):
-                <h4>Users</h4>
-                #for(user in users):
-                   <li>#(user.name) #(user.email)</li>
-                #endfor
-
-                <br />
-
-                <h4>Tokens</h4>
-                #for(token in tokens):
-                   <li>#(token.id)</li>
-                #endfor
-
-                <br />
-
-                <h4>Sessions</h4>
-                #for(session in sessions):
-                   <li>#(session.id)</li>
-                #endfor
-
-                <br />
-                #endif
     #endexport
 #endextend
 

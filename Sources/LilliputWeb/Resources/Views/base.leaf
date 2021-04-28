@@ -36,13 +36,6 @@
                             id="navbarSupportedContent">
                             
                             <ul class="navbar-nav mr-auto">
-                                #if(file != "GamePage"):
-                                #if(user != nil):
-                                <li class="nav-item #if(file == "GamePage"){active}">
-                                    <a href="/" class="nav-link">Play</a>
-                                </li>
-                                #endif
-                                #endif
                             </ul>
                             
                             <ul class="nav navbar-nav navbar-right">

@@ -21,7 +21,7 @@
 
 <form action="/input" method="POST">
     <div class="form-group">
-        <input type="text" name="command" class="form-control" id="command" value="#(request.command)" />
+        <input type="text" name="command" class="form-control" id="command" value="#(request.command)" autofocus />
         <label for="command">enter a command:</label>
     </div>
 </form>

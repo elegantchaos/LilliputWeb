@@ -22,6 +22,11 @@
                    <li>#(session.id)</li>
                 #endfor
 
+                <h4>Transcripts</h4>
+                #for(transcript in page.transcripts):
+                   <li>#(transcript.value)</li>
+                #endfor
+
                 <br />
                 #endif
     #endexport

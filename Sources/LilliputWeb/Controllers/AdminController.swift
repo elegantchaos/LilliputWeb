@@ -15,13 +15,22 @@ struct AdminController: RouteCollection {
         routes.get(.admin, use: requireUser(handleGetAdmin))
     }
     
-    func handleGetAdmin(_ req: Request, for user: User? = nil) -> EventLoopFuture<Response> {
+    func unpack(_ data: ((([Token], [SessionRecord]), [User]), [Transcript])) -> ([Token], [SessionRecord], [User], [Transcript]) {
+        let (tsu, transcripts) = data
+        let (ts, users) = tsu
+        let (tokens, sessions) = ts
+        return (tokens, sessions, users, transcripts)
+    }
+    
+    func handleGetAdmin(_ req: Request, for user: User) -> EventLoopFuture<Response> {
+        print("test")
         return req.tokens.all()
             .and(SessionRecord.query(on: req.db).all())
             .and(req.users.all())
-            .flatMap { (tokensAndSessions, users) in
-                let (tokens, sessions) = tokensAndSessions
-                let page = AdminPage(user: user, users: users, tokens: tokens, sessions: sessions)
+            .and(req.transcripts.all())
+            .flatMap { data in
+                let (tokens, sessions, users, transcripts) = self.unpack(data)
+                let page = AdminPage(user: user, users: users, tokens: tokens, sessions: sessions, transcripts: transcripts)
                 return req.render(page, user: user)
             }
     }

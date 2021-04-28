@@ -27,10 +27,6 @@ public extension EventLoopFuture {
             throw $0
         }
     }
-//
-//    func thenCreate<I: Model>(_ item: I, with req: Request) -> EventLoopFuture<Void>  {
-//        flatMap { _ in item.create(on: req.db) }
-//    }
 
 }
 

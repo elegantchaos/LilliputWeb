@@ -8,18 +8,14 @@ import FluentSQL
 import Vapor
 
 extension User {
-    struct AddHistory: Fluent.Migration {
-        var name: String { "AddUserHistory" }
-
-        func prepare(on database: Database) -> EventLoopFuture<Void> {
+    static var addHistoryMigration: Fluent.Migration {
+        SimpleMigration("AddUserHistory", for: self) { schema in
             let defaultValue = SQLColumnConstraintAlgorithm.default("")
-            return database.schema(User.schema)
+            return schema
                 .field(.history, .string, .sql(defaultValue))
                 .update()
-        }
-
-        func revert(on database: Database) -> EventLoopFuture<Void> {
-            database.schema(User.schema)
+        } revert: { schema in
+            schema
                 .deleteField(.history)
                 .update()
         }

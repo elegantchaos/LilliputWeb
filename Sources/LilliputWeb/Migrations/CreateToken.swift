@@ -6,20 +6,17 @@
 import Fluent
 
 extension Token {
-    struct Create: Fluent.Migration {
-        var name: String { "CreateToken" }
-
-        func prepare(on database: Database) -> EventLoopFuture<Void> {
-            database.schema(Token.schema)
+    static var createMigration: Fluent.Migration {
+        SimpleMigration("CreateToken", for: self) { schema in
+            schema
                 .id()
                 .field(.value, .string, .required)
                 .field(.user, .uuid, .required, .references("users", "id"))
                 .unique(on: .value)
                 .create()
-        }
-
-        func revert(on database: Database) -> EventLoopFuture<Void> {
-            database.schema(Token.schema).delete()
+        } revert: { schema in
+            schema
+                .delete()
         }
     }
 }

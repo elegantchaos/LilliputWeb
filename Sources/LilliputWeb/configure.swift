@@ -18,11 +18,12 @@ public func configure(_ app: Application, game: GameConfiguration) throws {
     }
     app.sessions.use(.fluent)
     
-    app.migrations.add(User.Create())
-    app.migrations.add(Token.Create())
+    app.migrations.add(User.createMigration)
+    app.migrations.add(Token.createMigration)
     app.migrations.add(SessionRecord.migration)
-    app.migrations.add(User.AddHistory())
-
+    app.migrations.add(User.addHistoryMigration)
+    app.migrations.add(Transcript.createMigration)
+    
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))     // serve files from /Public folder
 
     // Configure Leaf
@@ -45,7 +46,8 @@ public func configure(_ app: Application, game: GameConfiguration) throws {
     
     app.users.use { req in DatabaseUserRepository(database: req.db) }
     app.tokens.use { req in DatabaseTokenRepository(database: req.db) }
-
+    app.transcripts.use { req in DatabaseTranscriptRepository(database: req.db) }
+    
     app.game = game
     
     if app.environment == .development {

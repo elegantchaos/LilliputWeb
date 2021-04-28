@@ -7,21 +7,18 @@ import Fluent
 import Vapor
 
 extension User {
-    struct Create: Fluent.Migration {
-        var name: String { "CreateUser" }
-
-        func prepare(on database: Database) -> EventLoopFuture<Void> {
-            database.schema(User.schema)
+    static var createMigration: Fluent.Migration {
+        SimpleMigration("CreateUser", for: self) { schema in
+            schema
                 .id()
                 .field(.name, .string, .required)
                 .field(.email, .string, .required)
                 .field(.passwordHash, .string, .required)
                 .unique(on: .name)
                 .create()
-        }
 
-        func revert(on database: Database) -> EventLoopFuture<Void> {
-            database.schema(User.schema).delete()
+        } revert: { schema in
+            schema.delete()
         }
     }
 }

@@ -6,13 +6,31 @@
 import Fluent
 import Vapor
 
+enum AdminError: String, DebuggableError {
+    case unknownUser
+
+    var identifier: String {
+        rawValue
+    }
+    
+    var reason: String {
+        rawValue
+    }
+    
+}
+
+
+
+
 extension PathComponent {
     static let admin: PathComponent = "admin"
+    static let adminUser: PathComponent = "admin-user"
 }
 
 struct AdminController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         routes.get(.admin, use: requireUser(handleGetAdmin))
+        routes.get("admin-user", ":user", use: requireUser(handleGetAdminUser))
     }
     
     func unpack(_ data: ((([Token], [SessionRecord]), [User]), [Transcript])) -> ([Token], [SessionRecord], [User], [Transcript]) {
@@ -33,5 +51,13 @@ struct AdminController: RouteCollection {
                 let page = AdminPage(user: user, users: users, tokens: tokens, sessions: sessions, transcripts: transcripts)
                 return req.render(page, user: user)
             }
+    }
+    
+    func handleGetAdminUser(_ req: Request, for loggedInUser: User) throws -> EventLoopFuture<Response> {
+        let otherID = try req.parameters.require("user", as: UUID.self)
+        let user = User.query(on: req.db).filter(\.$id == otherID).first()
+        return user
+            .unwrap(or: AdminError.unknownUser)
+            .flatMap { examinedUser in req.render(UserAdminPage(user: examinedUser), user: loggedInUser) }
     }
 }

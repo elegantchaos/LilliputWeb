@@ -5,7 +5,7 @@
                 #if(isAdmin):
                 <h4>Users</h4>
                 #for(user in page.users):
-                   <li>#(user.name) #(user.email)</li>
+                   <li><a href="/admin-user/#(user.id)">#(user.email)</a></li>
                 #endfor
 
                 <br />

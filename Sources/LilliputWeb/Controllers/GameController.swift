@@ -34,14 +34,18 @@ struct GameController: RouteCollection {
         user.history.append("\n")
         return user
             .update(on: req.db)
-            .thenRedirect(with: req, to: "/")
+            .redirect(with: req, to: .root)
     }
 
     func handleReset(_ req: Request, user: User) throws -> EventLoopFuture<Response> {
+        let transcript = user.history
         user.history = ""
         return user
             .update(on: req.db)
-            .thenRedirect(with: req, to: .root)
+            .withValue(Transcript(value: transcript, userID: user.id!))
+            .create(on: req.db)
+            .redirect(with: req, to: .root)
     }
 
 }
+

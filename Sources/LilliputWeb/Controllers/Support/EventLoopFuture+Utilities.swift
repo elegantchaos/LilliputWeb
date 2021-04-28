@@ -4,14 +4,14 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 import Vapor
-
+import Fluent
 
 public extension EventLoopFuture {
     func then<NewValue>(file: StaticString = #file, line: UInt = #line, _ callback: @escaping (Value) -> EventLoopFuture<NewValue>) -> EventLoopFuture<NewValue> {
         flatMap(file: file, line: line, callback)
     }
 
-    func thenRedirect(with request: Request, to: PathComponent) -> EventLoopFuture<Response> {
+    func redirect(with request: Request, to: PathComponent) -> EventLoopFuture<Response> {
         map { _ in request.redirect(to: to) }
     }
 
@@ -26,5 +26,22 @@ public extension EventLoopFuture {
             }
             throw $0
         }
+    }
+//
+//    func thenCreate<I: Model>(_ item: I, with req: Request) -> EventLoopFuture<Void>  {
+//        flatMap { _ in item.create(on: req.db) }
+//    }
+
+}
+
+public extension EventLoopFuture {
+    func withValue<T: Model>(_ item: T) -> EventLoopFuture<T> {
+        map { _ in item }
+    }
+}
+
+public extension EventLoopFuture where Value: Model {
+    func create(on db: Database) -> EventLoopFuture<Void> {
+        flatMap { item in item.create(on: db) }
     }
 }

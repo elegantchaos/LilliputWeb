@@ -33,17 +33,15 @@ extension RegistrationRequest: Validatable {
     }
 }
 
-extension User {
-    convenience init(from register: RegistrationRequest, hash: String) throws {
-        self.init(name: register.name, email: register.email, passwordHash: hash)
-    }
+extension PathComponent {
+    static let register: PathComponent = "register"
 }
 
 struct RegistrationController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
-        routes.get("register", use: renderRegister)
-        routes.post("register", use: handleRegister)
+        routes.get(.register, use: renderRegister)
+        routes.post(.register, use: handleRegister)
     }
     
     func renderRegister(req: Request) throws -> EventLoopFuture<Response> {
@@ -54,17 +52,19 @@ struct RegistrationController: RouteCollection {
         let registration = try RegistrationRequest.decode(from: req)
         
         return registration.hash(with: req)
-            .thenCreateUser(using: registration, with: req)
-            .thenRedirect(with: req, to: .login)
+            .withNewUser(using: registration, with: req)
+            .create(on: req.db)
+            .translatingError(to: AuthenticationError.emailAlreadyExists, if: { (error: DatabaseError) in error.isConstraintFailure })
+            .redirect(with: req, to: .login)
     }
     
 }
 
 
 fileprivate extension EventLoopFuture where Value == String {
-    func thenCreateUser(using registration: RegistrationRequest, with req: Request) -> EventLoopFuture<Void>  {
-        flatMapThrowing { hash in try User(from: registration, hash: hash) }
+    func withNewUser(using registration: RegistrationRequest, with req: Request) -> EventLoopFuture<User>  {
+        flatMapThrowing { hash in User(name: registration.name, email: registration.email, passwordHash: hash) }
             .translatingError(to: AuthenticationError.emailAlreadyExists, if: { (error: DatabaseError) in error.isConstraintFailure })
-            .flatMap { user in return user.create(on: req.db) }
     }
+
 }

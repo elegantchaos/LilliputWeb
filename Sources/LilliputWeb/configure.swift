@@ -6,6 +6,7 @@ import Leaf
 import LeafKit
 
 // configures your application
+
 public func configure(_ app: Application, game: GameConfiguration) throws {
 
     if let databaseURL = Environment.get("DATABASE_URL"), var postgresConfig = PostgresConfiguration(url: databaseURL) {
@@ -18,11 +19,7 @@ public func configure(_ app: Application, game: GameConfiguration) throws {
     }
     app.sessions.use(.fluent)
     
-    app.migrations.add(User.createMigration)
-    app.migrations.add(Token.createMigration)
-    app.migrations.add(SessionRecord.migration)
-    app.migrations.add(User.addHistoryMigration)
-    app.migrations.add(Transcript.createMigration)
+    setupMigrations(app)
     
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))     // serve files from /Public folder
 
@@ -55,6 +52,16 @@ public func configure(_ app: Application, game: GameConfiguration) throws {
     }
 
 }
+
+fileprivate func setupMigrations(_ app: Application) {
+    app.migrations.add(User.createMigration)
+    app.migrations.add(Token.createMigration)
+    app.migrations.add(SessionRecord.migration)
+    app.migrations.add(User.addHistoryMigration)
+    app.migrations.add(Transcript.createMigration)
+    app.migrations.add(User.makeEmailUnique)
+}
+
 
 public struct GameConfiguration {
     let name: String

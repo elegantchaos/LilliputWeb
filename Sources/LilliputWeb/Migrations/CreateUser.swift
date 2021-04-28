@@ -22,3 +22,20 @@ extension User {
         }
     }
 }
+
+extension User {
+    static var makeEmailUnique: Fluent.Migration {
+        SimpleMigration("MakeEmailUnique", for: self) { schema in
+            schema
+                .unique(on: .email)
+                .deleteUnique(on: .name)
+                .update()
+
+        } revert: { schema in
+            schema
+                .unique(on: .name)
+                .deleteUnique(on: .email)
+                .update()
+        }
+    }
+}

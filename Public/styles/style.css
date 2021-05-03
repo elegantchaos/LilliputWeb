@@ -20,6 +20,10 @@
 /*@media (min-width: 1200px) {}*/
 /*@media (min-width: 1800px) {}*/
 
+div.line.rawInput p {
+    display: none;
+}
+
 div.line.input {
     font-weight: bold;
 }

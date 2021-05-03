@@ -8,11 +8,12 @@ import Vapor
 
 struct GamePage: LeafPage {
     let transcript: [TranscriptLine]
-    
+    var prompt: String
+
     struct TranscriptLine: Codable {
         let text: [String]
         let type: String
-        
+
         init(_ line: WebDriver.Line) {
             text = line.text.split(separator: "\n").map(as: String.self)
             type = String(describing: line.type)
@@ -26,11 +27,28 @@ struct GamePage: LeafPage {
         } else {
             history = []
         }
-        
-        let lines = WebDriver.run(history: history, url: game.url)
-        self.transcript = lines.map({ TranscriptLine($0)})
+
+        var prompt: String?
+        func filterPrompts(_ line: WebDriver.Line) -> Bool {
+            if line.type == .prompt {
+                prompt = line.text
+                return false
+            } else {
+                prompt = nil
+                return true
+            }
+        }
+
+        let lines = WebDriver.run(history: history, url: game.url).dropLast(2)
+        let transcript = lines
+            .filter(filterPrompts)
+            .map({ TranscriptLine($0)})
+
+        self.transcript = transcript
+        self.prompt = prompt ?? "some common commands: <b>go</b> <i>direction</i>, <b>look</b>, <b>inventory</b>, <b>take</b>/<b>drop</b>/<b>use</b>/<b>open</b>/<b>unlock</b> <i>object</i>."
     }
     
+
     func meta(for user: User?) -> PageMetadata {
         let title: String
         let description: String

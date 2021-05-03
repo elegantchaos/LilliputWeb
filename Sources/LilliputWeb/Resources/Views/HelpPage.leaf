@@ -13,7 +13,7 @@ You interact with it by typing commands such as <span class="command">go north</
 </p>
 
 <p>
-Adventure games typically have a number of locations that you move between with the <span class="command">go</span> command. When you enter a location you will first see a few paragraphs of text describing it.
+Adventure games have evolved a few conventions over the years. Typically they have a number of locations that you move between with the <span class="command">go</span> command. When you enter a location you will first see a few paragraphs of text describing it.
 </p>
 
 <p>
@@ -74,7 +74,7 @@ Experiment with different vocabulary!
 </p>
 
 <p>
-Note that in general, words such as "an", "the", "into" etc are not necessary. In general the game should be smart enough to ignore them, but if in doubt, try missing them out from the command you type. Something like <span class="command">open the lid of the box</span> may be too specific -- but <span class="command">open box</span> might work. If the verb that you are using doesn't seem to work, try a synonym.
+Note that in general, words such as "an", "the", "into" etc are not necessary. Usually the game should be smart enough to ignore them, but if in doubt, try missing them out from the command you type. Something like <span class="command">open the lid of the box</span> may be too specific -- but <span class="command">open box</span> might work. If the verb that you are using doesn't seem to work, try a synonym.
 </p>
 
 <p>

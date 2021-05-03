@@ -20,7 +20,7 @@ class WebDriver: Driver {
         guard let string = input.first else { return Input("quit", stopWords: stopWords)! }
         
         input.remove(at: 0)
-        return Input(string, stopWords: [])!
+        return Input(string.lowercased(), stopWords: [])!
     }
     
     func output(_ string: String, type: OutputType) {

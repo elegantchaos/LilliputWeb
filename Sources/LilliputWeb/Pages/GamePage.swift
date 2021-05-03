@@ -11,12 +11,19 @@ struct GamePage: LeafPage {
     var prompt: String
 
     struct TranscriptLine: Codable {
+        let index: Int?
         let text: [String]
         let type: String
 
-        init(_ line: WebDriver.Line) {
-            text = line.text.split(separator: "\n").map(as: String.self)
-            type = String(describing: line.type)
+        init(_ line: WebDriver.Line, index: inout Int) {
+            self.text = line.text.split(separator: "\n").map(as: String.self)
+            self.type = String(describing: line.type)
+            if line.type == .input {
+                self.index = index
+                index += 1
+            } else {
+                self.index = nil
+            }
         }
     }
     
@@ -40,9 +47,10 @@ struct GamePage: LeafPage {
         }
 
         let lines = WebDriver.run(history: history, url: game.url).dropLast(2)
+        var index = 0
         let transcript = lines
             .filter(filterPrompts)
-            .map({ TranscriptLine($0)})
+            .map({ TranscriptLine($0, index: &index)})
 
         self.transcript = transcript
         self.prompt = prompt ?? "some common commands: <b>go</b> <i>direction</i>, <b>look</b>, <b>inventory</b>, <b>take</b>/<b>drop</b>/<b>use</b>/<b>open</b>/<b>unlock</b> <i>object</i>."

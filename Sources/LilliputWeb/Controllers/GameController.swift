@@ -14,6 +14,8 @@ extension PathComponent {
     static let root: PathComponent = ""
     static let input: PathComponent = "input"
     static let reset: PathComponent = "reset"
+    static let undo: PathComponent = "undo"
+    static let lineParameter: PathComponent = ":line"
 }
 
 struct GameController: RouteCollection {
@@ -21,6 +23,7 @@ struct GameController: RouteCollection {
         routes.get(.root, use: withUser(handleGetGame))
         routes.post(.input, use: requireUser(handlePostInput))
         routes.get(.reset, use: requireUser(handleReset))
+        routes.get(.undo, .lineParameter, use: requireUser(handleUndo))
     }
     
     func handleGetGame(_ req: Request, user: User?) -> EventLoopFuture<Response> {
@@ -47,5 +50,14 @@ struct GameController: RouteCollection {
             .redirect(with: req, to: .root)
     }
 
+    func handleUndo(_ req: Request, user: User) throws -> EventLoopFuture<Response> {
+        let lineIndex = try req.parameters.require("line", as: Int.self)
+        let transcript = user.history.split(separator: "\n")
+        let undone = transcript[..<lineIndex]
+        user.history = undone.joined(separator: "\n").appending("\n")
+        return user
+            .update(on: req.db)
+            .redirect(with: req, to: .root)
+    }
 }
 

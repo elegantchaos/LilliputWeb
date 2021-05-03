@@ -11,6 +11,9 @@
 #else:
 <div class="form-group transcript" style="div.transcript { overflow: scroll; }">
     #for(line in page.transcript):
+        #if(line.type == "input"):
+        <div class="undo"><a href="/undo/#(line.index)">[undo]</a></div>
+        #endif
         <div class="line #(line.type)">
         #for(paragraph in line.text):
             <p>#(paragraph)</p>

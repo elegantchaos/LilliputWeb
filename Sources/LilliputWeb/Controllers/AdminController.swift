@@ -25,12 +25,13 @@ enum AdminError: String, DebuggableError {
 extension PathComponent {
     static let admin: PathComponent = "admin"
     static let adminUser: PathComponent = "admin-user"
+    static let userParameter: PathComponent = ":user"
 }
 
 struct AdminController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         routes.get(.admin, use: requireUser(handleGetAdmin))
-        routes.get("admin-user", ":user", use: requireUser(handleGetAdminUser))
+        routes.get(.adminUser, .userParameter, use: requireUser(handleGetAdminUser))
     }
     
     func unpack(_ data: ((([Token], [SessionRecord]), [User]), [Transcript])) -> ([Token], [SessionRecord], [User], [Transcript]) {

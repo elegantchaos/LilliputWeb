@@ -25,7 +25,9 @@
 <form action="/input" method="POST">
     <div class="form-group">
         <input type="text" name="command" class="form-control" id="command" value="#(request.command)" autofocus placeholder="enter a command" />
-        <div class="prompt">#(page.prompt)</div>
+        <div class="help"><a href="/help">[help]</a></div>
+        <div class="prompt">#(page.prompt)
+        </div>
     </div>
 </form>
 #endif

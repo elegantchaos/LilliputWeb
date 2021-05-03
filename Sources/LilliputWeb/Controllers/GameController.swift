@@ -11,21 +11,27 @@ struct InputRequest: Content {
 }
 
 extension PathComponent {
-    static let root: PathComponent = ""
+    static let help: PathComponent = "help"
     static let input: PathComponent = "input"
-    static let reset: PathComponent = "reset"
-    static let undo: PathComponent = "undo"
     static let lineParameter: PathComponent = ":line"
+    static let reset: PathComponent = "reset"
+    static let root: PathComponent = ""
+    static let undo: PathComponent = "undo"
 }
 
 struct GameController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
-        routes.get(.root, use: withUser(handleGetGame))
+        routes.get(.help, use: requireUser(handleGetHelp))
         routes.post(.input, use: requireUser(handlePostInput))
         routes.get(.reset, use: requireUser(handleReset))
+        routes.get(.root, use: withUser(handleGetGame))
         routes.get(.undo, .lineParameter, use: requireUser(handleUndo))
     }
-    
+
+    func handleGetHelp(_ req: Request, user: User) -> EventLoopFuture<Response> {
+        return req.render(HelpPage(), user: user)
+    }
+
     func handleGetGame(_ req: Request, user: User?) -> EventLoopFuture<Response> {
         let game = req.application.game
         return req.render(GamePage(user: user, game: game), user: user)

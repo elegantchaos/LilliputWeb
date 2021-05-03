@@ -1,0 +1,88 @@
+#extend("base"):
+#export("body"):
+
+<div class="manual">
+
+<p>
+Welcome to Strange Cases.
+This is an old-school adventure game.
+</p>
+
+<p>
+You interact with it by typing commands such as <span class="command">go north</span> or <span class="command">take gun</span>.
+</p>
+
+<p>
+Adventure games typically have a number of locations that you move between with the <span class="command">go</span> command. When you enter a location you will first see a few paragraphs of text describing it.
+</p>
+
+<p>
+The text is usually comprised of three sections, in the following order:
+</p>
+
+<ul>
+<li>description</li>
+<li>objects you can interact with</li>
+<li>exits</li>
+</ul>
+
+<p>
+Typically the text starts with a description of the main features of the location, along with some key things that it contains. In general the text in these introductory paragraphs is just there to set the scene. The things mentioned in this description may be significant, but any objects will probably not be interactive.
+</p>
+
+<p>
+Many locations will also contain one or more objects (and sometimes people) that you can interact with. To help distinguish these objects from the ones that are just scene-setting, the descriptive text will be followed by a paragraph that says something like "You can see", followed by a list of objects and people.
+</p>
+
+<p>
+Finally, every location will be connected to other locations, via one or more exits. These are often described in terms of compass points: "north", "east", etc, but can also include directions such as "up" or "down".
+</p>
+
+<h4>Commands</h4>
+
+<p>
+You move between locations using the <span class="command">go</span> command, combined with the exit name: eg <span class="command">go north</span>. This can be abbreviated to just the first letter of the exit: <span class="command">n</span>.
+</p>
+
+<p>
+If an object is small, you make be able to <span class="command">take</span> it. This will add it to your inventory. You can see what you are carrying at any time with the <span class="command">inventory</span> command.
+</p>
+
+<p>
+You may be able to <span class="command">open</span> some objects - for example containers or doors. Sometimes you might have to <span class="command">unlock</span> them first, which will probably require finding a key, or figuring out another way to defeat the lock.
+</p>
+
+<p>
+To get a better description of an object, you can <span class="command">examine</span> or <span class="command">search</span> it. Sometimes doing this will reveal other objects or details that your initial view of the room missed.
+</p>
+
+<p>
+Sometimes an object has a particular purpose, and you can <span class="command">use</span> it a specific context. Sometimes just having it in your inventory when you try to do something is sufficient. Some objects are there just for flavour or fun. If it's red, and smells of herring...
+</p>
+
+<h4>If in doubt...</h4>
+
+<p>
+...experiment!
+
+<p>
+The description above is general, but there exceptions, and there are other commands that are relevant in certain situations. Sometimes objects are hidden and only revealed after you've examined or moved something.
+</p>
+
+<p>
+Experiment with different vocabulary!
+</p>
+
+<p>
+Note that in general, words such as "an", "the", "into" etc are not necessary. In general the game should be smart enough to ignore them, but if in doubt, try missing them out from the command you type. Something like <span class="command">open the lid of the box</span> may be too specific -- but <span class="command">open box</span> might work. If the verb that you are using doesn't seem to work, try a synonym.
+</p>
+
+<p>
+Good luck!
+</p>
+</div>
+
+<a href="/">Back to the game…</a>
+#endexport
+#endextend
+

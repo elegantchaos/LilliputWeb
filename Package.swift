@@ -17,9 +17,9 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/elegantchaos/Lilliput.git", from: "1.0.10"),
+        .package(url: "https://github.com/elegantchaos/Lilliput.git", from: "1.0.12"),
 
-        // 💧 A server-side Swift web framework.
+        // 💧 Vapor.
         .package(url: "https://github.com/vapor/vapor.git", from: "4.44.1"),
         .package(url: "https://github.com/vapor/fluent.git", from: "4.2.0"),
         .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.0.0"),

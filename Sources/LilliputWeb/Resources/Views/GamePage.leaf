@@ -9,7 +9,9 @@
 <div>To play the game, you need to first <a href="/register">register</a> or <a href="/login">log in</a>.</div>
 
 #else:
-<div class="form-group transcript" style="div.transcript { overflow: scroll; }">
+<div class="form-group transcript">
+    <div id="scroll-box">
+    <div>
     #for(line in page.transcript):
         #if(line.type == "input"):
         <div class="undo"><a href="/undo/#(line.index)">[undo]</a></div>
@@ -20,6 +22,9 @@
         #endfor
         </div>
     #endfor
+    <div id="scroll-anchor" />
+    </div>
+    </div>
 </div>
 
 <form action="/input" method="POST">

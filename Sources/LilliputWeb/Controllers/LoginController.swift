@@ -61,7 +61,7 @@ struct LoginController: RouteCollection {
                 .thenVerifyLogin(login, with: req)
                 .thenRemoveTokens(with: req)
                 .thenGenerateToken(with: req)
-                .thenRedirect(with: req, to: "/")
+                .thenRedirect(with: req, to: .root)
                 .flatMapError { e in
                     return req.render(LoginPage(request: login), error: e)
                 }

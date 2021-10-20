@@ -15,7 +15,7 @@ public extension EventLoopFuture {
         map { _ in request.redirect(to: to) }
     }
 
-    func thenRedirect(with request: Request, to: String) -> EventLoopFuture<Response> {
+    func thenRedirect(with request: Request, to: PathComponent) -> EventLoopFuture<Response> {
         map { _ in request.redirect(to: to) }
     }
 

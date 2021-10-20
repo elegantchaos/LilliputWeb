@@ -10,7 +10,7 @@
                         </head>
     
     <body class="container">
-        #import("body")
+        #import("content")
 
         <!-- Footer -->
         <footer class="text-center text-lg-start bg-dark text-muted">

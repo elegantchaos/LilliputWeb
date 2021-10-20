@@ -1,6 +1,5 @@
 #extend("root"):
-    #export("body"):
+    #export("content"):
         <img src="/splash.jpg" width="100%">
-    </body>
     #endexport
 #endextend

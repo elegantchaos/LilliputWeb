@@ -1,4 +1,4 @@
-#extend("base"):
+#extend("basic"):
     #export("body"):
                 <h3 class="card-title">#(meta.title)</h3>
 

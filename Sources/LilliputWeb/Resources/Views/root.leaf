@@ -13,7 +13,7 @@
         #import("content")
 
         <!-- Footer -->
-        <footer class="text-center text-lg-start bg-dark text-muted">
+        <footer class="text-center text-lg-start bg-dark text-muted small">
           <!-- Copyright -->
           <div class="text-center p-4">
             Copyright © 2021 Elegant Chaos and Hereward L.M. Proops.

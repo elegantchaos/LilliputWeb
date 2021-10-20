@@ -1,0 +1,8 @@
+#extend("base"):
+#export("body"):
+
+<img src="/splash.jpg">
+
+#endexport
+#endextend
+

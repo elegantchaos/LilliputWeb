@@ -12,6 +12,7 @@ extension PathComponent {
 
 struct SplashController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
+        routes.get(.root, use: withUser(handleGetSplash))
         routes.get(.splash, use: withUser(handleGetSplash))
     }
 

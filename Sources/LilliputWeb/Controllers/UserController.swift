@@ -28,7 +28,7 @@ struct UserController: RouteCollection {
         user.name = response.name
         user.email = response.email
         return user.save(on: req.db)
-            .thenRedirect(with: req, to: .root)
+            .thenRedirect(with: req, to: .game)
     }
 
     func handleLogout(_ req: Request) throws -> Response {

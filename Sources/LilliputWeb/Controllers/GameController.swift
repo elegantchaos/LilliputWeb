@@ -16,6 +16,7 @@ extension PathComponent {
     static let lineParameter: PathComponent = ":line"
     static let reset: PathComponent = "reset"
     static let root: PathComponent = ""
+    static let game: PathComponent = "game"
     static let undo: PathComponent = "undo"
 }
 
@@ -24,7 +25,7 @@ struct GameController: RouteCollection {
         routes.get(.help, use: requireUser(handleGetHelp))
         routes.post(.input, use: requireUser(handlePostInput))
         routes.get(.reset, use: requireUser(handleReset))
-        routes.get(.root, use: withUser(handleGetGame))
+        routes.get(.game, use: withUser(handleGetGame))
         routes.get(.undo, .lineParameter, use: requireUser(handleUndo))
     }
 
@@ -43,7 +44,7 @@ struct GameController: RouteCollection {
         user.history.append("\n")
         return user
             .update(on: req.db)
-            .redirect(with: req, to: .root)
+            .redirect(with: req, to: .game)
     }
 
     func handleReset(_ req: Request, user: User) throws -> EventLoopFuture<Response> {
@@ -53,7 +54,7 @@ struct GameController: RouteCollection {
             .update(on: req.db)
             .withValue(Transcript(value: transcript, userID: user.id!))
             .create(on: req.db)
-            .redirect(with: req, to: .root)
+            .redirect(with: req, to: .game)
     }
 
     func handleUndo(_ req: Request, user: User) throws -> EventLoopFuture<Response> {
@@ -63,7 +64,7 @@ struct GameController: RouteCollection {
         user.history = undone.joined(separator: "\n").appending("\n")
         return user
             .update(on: req.db)
-            .redirect(with: req, to: .root)
+            .redirect(with: req, to: .game)
     }
 }
 

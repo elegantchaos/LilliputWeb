@@ -4,7 +4,6 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 import Vapor
 import Fluent
-import CloudKit
 
 extension FieldKey {
     static var name: FieldKey = "name"

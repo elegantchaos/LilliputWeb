@@ -10,11 +10,12 @@ import Vapor
 struct UserAdminPage: LeafPage {
     let user: User
     let current: [String]
+    let transcripts: [Transcript]
     
-    init(user: User) {
+    init(user: User, transcripts: [Transcript]) {
         self.user = user
         self.current = user.history.split(separator: "\n").compactMap({ String($0) })
-
+        self.transcripts = transcripts
     }
     
     func meta(for loggedInUser: User?) -> PageMetadata {

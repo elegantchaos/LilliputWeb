@@ -10,24 +10,11 @@
 
                 <br />
 
-                <h4>Tokens</h4>
-                #for(token in page.tokens):
-                   <li>#(token.id)</li>
-                #endfor
+                <h4>Actions</h4>
+                <div><a href="/admin">Overview</a></div>
+                <div><a href="/admin-tokens">All Tokens</a></div>
+                <div><a href="/admin-sessions">All Sessions</a></div>
 
-                <br />
-
-                <h4>Sessions</h4>
-                #for(session in page.sessions):
-                   <li>#(session.id)</li>
-                #endfor
-
-                <h4>Transcripts</h4>
-                #for(transcript in page.transcripts):
-                   <li>#(transcript.value)</li>
-                #endfor
-
-                <br />
                 #endif
     #endexport
 #endextend

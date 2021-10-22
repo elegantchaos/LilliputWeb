@@ -9,16 +9,6 @@ import Vapor
 
 struct AdminPage: LeafPage {
     let users: [User]
-    let tokens: [Token]
-    let sessions: [SessionRecord]
-    let transcripts: [Transcript]
-    
-    init(user: User?, users: [User], tokens: [Token], sessions: [SessionRecord], transcripts: [Transcript]) {
-        self.users = users
-        self.tokens = tokens
-        self.sessions = sessions
-        self.transcripts = transcripts
-    }
     
     func meta(for user: User?) -> PageMetadata {
         let title: String

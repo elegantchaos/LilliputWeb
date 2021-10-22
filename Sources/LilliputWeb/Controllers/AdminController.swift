@@ -46,11 +46,10 @@ struct AdminController: RouteCollection {
         routes.post(.adminUser, .userParameter, use: requireUser(handleUpdateUser))
     }
     
-    func unpack(_ data: ((([Token], [SessionRecord]), [User]), [Transcript])) -> ([Token], [SessionRecord], [User], [Transcript]) {
+    func unpack(_ data: (([SessionRecord], [User]), [Transcript])) -> ([SessionRecord], [User], [Transcript]) {
         let (tsu, transcripts) = data
-        let (ts, users) = tsu
-        let (tokens, sessions) = ts
-        return (tokens, sessions, users, transcripts)
+        let (sessions, users) = tsu
+        return (sessions, users, transcripts)
     }
     
     func handleGetOverview(_ req: Request, for loggedInUser: User) -> EventLoopFuture<Response> {
@@ -58,13 +57,9 @@ struct AdminController: RouteCollection {
             return req.eventLoop.makeFailedFuture(AdminError.notAdmin)
         }
             
-        return req.tokens.all()
-            .and(SessionRecord.query(on: req.db).all())
-            .and(req.users.all())
-            .and(req.transcripts.all())
-            .flatMap { data in
-                let (tokens, sessions, users, transcripts) = self.unpack(data)
-                let page = AdminPage(user: loggedInUser, users: users, tokens: tokens, sessions: sessions, transcripts: transcripts)
+        return req.users.all()
+            .flatMap { users in
+                let page = AdminPage(users: users)
                 return req.render(page, user: loggedInUser)
             }
     }
@@ -76,7 +71,7 @@ struct AdminController: RouteCollection {
             
         return Token.query(on: req.db).with(\.$user).all()
             .flatMap { tokens in
-                let page = TokenAdminPage(user: loggedInUser, tokens: tokens)
+                let page = TokenAdminPage(tokens: tokens)
                 return req.render(page, user: loggedInUser)
             }
     }
@@ -86,13 +81,9 @@ struct AdminController: RouteCollection {
             return req.eventLoop.makeFailedFuture(AdminError.notAdmin)
         }
             
-        return req.tokens.all()
-            .and(SessionRecord.query(on: req.db).all())
-            .and(req.users.all())
-            .and(req.transcripts.all())
-            .flatMap { data in
-                let (tokens, sessions, users, transcripts) = self.unpack(data)
-                let page = SessionAdminPage(user: loggedInUser, users: users, tokens: tokens, sessions: sessions, transcripts: transcripts)
+        return SessionRecord.query(on: req.db).all()
+            .flatMap { sessions in
+                let page = SessionAdminPage(sessions: sessions)
                 return req.render(page, user: loggedInUser)
             }
     }
@@ -103,10 +94,16 @@ struct AdminController: RouteCollection {
         }
 
         let userID = try req.parameters.require("user", as: UUID.self)
+//        let transcripts = Transcript
+//            .query(on: req.db)
+//            .filter(\.user.$id == userID)
+//
         let user = User.query(on: req.db).filter(\.$id == userID).first()
         return user
             .unwrap(or: AdminError.unknownUser)
-            .flatMap { examinedUser in req.render(UserAdminPage(user: examinedUser), user: loggedInUser) }
+            .and(req.transcripts.all().map({ $0.filter({ $0.user.id == userID }) }))
+            .flatMap { (examinedUser, transcripts) in
+                req.render(UserAdminPage(user: examinedUser, transcripts: transcripts), user: loggedInUser) }
     }
 
     func handleUpdateUser(_ req: Request, for loggedInUser: User) throws -> EventLoopFuture<Response> {

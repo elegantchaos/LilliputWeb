@@ -9,6 +9,11 @@
                    <li>#(token.id) (#(token.user.name))</li>
                 #endfor
 
+                <br />
+
+                <h4>Actions</h4>
+                <div><a href="/admin">Back to Overview</a></div>
+
                 #endif
     #endexport
 #endextend

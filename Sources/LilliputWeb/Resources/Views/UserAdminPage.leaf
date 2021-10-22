@@ -30,6 +30,14 @@
 
 </form>
 
+<br />
+
+<h4>Transcripts</h4>
+#for(transcript in page.transcripts):
+   <li>#(transcript.value)</li>
+#endfor
+
+<br />
 
 #endexport
 #endextend

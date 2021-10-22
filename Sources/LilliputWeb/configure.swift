@@ -47,10 +47,7 @@ public func configure(_ app: Application, game: GameConfiguration) throws {
     
     app.game = game
     
-    if app.environment == .development {
-        try app.autoMigrate().wait()
-    }
-
+    try app.autoMigrate().wait()
 }
 
 fileprivate func setupMigrations(_ app: Application) {

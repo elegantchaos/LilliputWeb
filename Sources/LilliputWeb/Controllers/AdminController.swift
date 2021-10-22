@@ -42,7 +42,6 @@ struct AdminController: RouteCollection {
     }
     
     func handleGetAdmin(_ req: Request, for user: User) -> EventLoopFuture<Response> {
-        print("test")
         return req.tokens.all()
             .and(SessionRecord.query(on: req.db).all())
             .and(req.users.all())

@@ -60,6 +60,7 @@ fileprivate func setupMigrations(_ app: Application) {
     app.migrations.add(User.addHistoryMigration)
     app.migrations.add(Transcript.createMigration)
     app.migrations.add(User.makeEmailUnique)
+    app.migrations.add(User.addUserRoles)
 }
 
 

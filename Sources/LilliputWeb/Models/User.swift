@@ -4,12 +4,14 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 import Vapor
 import Fluent
+import CloudKit
 
 extension FieldKey {
     static var name: FieldKey = "name"
     static var email: FieldKey = "email"
     static var history: FieldKey = "history"
     static var passwordHash: FieldKey = "password_hash"
+    static var roles: FieldKey = "roles"
 }
 
 final class User: Model, Content {
@@ -30,6 +32,9 @@ final class User: Model, Content {
     @Field(key: .history)
     var history: String
     
+    @Field(key: .roles)
+    var roles: String
+    
     init() { }
 
     init(id: UUID? = nil, name: String, email: String, passwordHash: String) {
@@ -39,9 +44,23 @@ final class User: Model, Content {
         self.passwordHash = passwordHash
         self.history = ""
     }
+
+    var roleSet: Set<String> {
+        return Set(roles.split(separator: ",").map({ String($0) }))
+    }
+    
+    func addRole(_ role: String) {
+        var existing = roleSet
+        existing.insert(role)
+        roles = existing.joined(separator: ",")
+    }
+    
+    func hasRole(_ role: String) -> Bool {
+        return roleSet.contains(role)
+    }
     
     var isAdmin: Bool {
-        name.lowercased() == "sam"
+        hasRole("admin")
     }
 }
 

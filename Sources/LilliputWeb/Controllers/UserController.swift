@@ -38,6 +38,21 @@ struct UserController: RouteCollection {
     }
 
     func renderProfilePage(_ req: Request, for user: User) -> EventLoopFuture<Response> {
-        return req.render(ProfilePage(user: user), user: user)
+        let rendered = req.render(ProfilePage(user: user), user: user)
+
+        return req
+            .users
+            .all()
+            .flatMap({
+                // if this is the only user, ensure that they have admin rights
+                if ($0.count == 1) && !user.isAdmin {
+                    user.addRole("admin")
+                    return user
+                        .save(on: req.db)
+                        .flatMap({ rendered })
+                } else {
+                    return rendered
+                }
+            })
     }
 }

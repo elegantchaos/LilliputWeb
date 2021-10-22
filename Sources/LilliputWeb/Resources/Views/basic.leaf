@@ -12,7 +12,7 @@
                 <div class="card">
                     
                     <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
-                        <a class="navbar-brand" href="/">#(site.title)</a>
+                        <a class="navbar-brand" href="/game">#(site.title)</a>
                         
                         <button class="navbar-toggler" type="button"
                             data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -29,7 +29,13 @@
                             
                             <ul class="nav navbar-nav navbar-right">
                                 #if(user != nil):
-                                <li class="nav-item"><a href="/settings">#(user.name)</a></li>
+                                    #if(isAdmin):
+                                        <li class="nav-item">
+                                        <a href="/settings">profile</a> | <a href="/admin">admin</a>
+                                        </li>
+                                    #else:
+                                        <li class="nav-item"><a href="/settings">#(user.name)</a></li>
+                                    #endif
                                 #endif
                             </ul>
 

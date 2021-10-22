@@ -15,7 +15,7 @@ struct TokenAdminPage: LeafPage {
         let description: String
 
         if let user = user {
-            title = "Tokens (admin as \(user.name))"
+            title = "Tokens"
             description = "Token admin page for \(user.name)."
         } else {
             title = "Not Logged In"

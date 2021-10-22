@@ -15,7 +15,7 @@ struct AdminPage: LeafPage {
         let description: String
 
         if let user = user {
-            title = "Admin: \(user.name)"
+            title = "Admin"
             description = "Admin page for \(user.name)."
         } else {
             title = "Not Logged In"

@@ -24,7 +24,6 @@
 
 </form>
 
-#if(page.current.count > 0):
 <br />
 <h4>Current Session</h4>
    <li>
@@ -32,15 +31,12 @@
         #(line)
     #endfor
    </li>
-#endif
 
-#if(page.transcripts.count > 0):
 <br />
 <h4>Previous Sessions</h4>
 #for(transcript in page.transcripts):
    <li>#(transcript.value)</li>
 #endfor
-#endif
 
 <br />
 <h4>Actions</h4>

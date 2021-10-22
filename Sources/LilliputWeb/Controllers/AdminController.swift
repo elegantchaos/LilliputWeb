@@ -94,16 +94,18 @@ struct AdminController: RouteCollection {
         }
 
         let userID = try req.parameters.require("user", as: UUID.self)
-//        let transcripts = Transcript
-//            .query(on: req.db)
-//            .filter(\.user.$id == userID)
-//
+        let transcripts = Transcript
+            .query(on: req.db)
+            .with(\.$user)
+            .filter(\.$user.$id == userID)
+            .all()
+
         let user = User.query(on: req.db).filter(\.$id == userID).first()
         return user
             .unwrap(or: AdminError.unknownUser)
-            .and(req.transcripts.all().map({ $0.filter({ $0.user.id == userID }) }))
-            .flatMap { (examinedUser, transcripts) in
-                req.render(UserAdminPage(user: examinedUser, transcripts: transcripts), user: loggedInUser) }
+            .and(transcripts)
+            .flatMap { (user, transcripts) in
+                req.render(UserAdminPage(user: user, transcripts: transcripts), user: loggedInUser) }
     }
 
     func handleUpdateUser(_ req: Request, for loggedInUser: User) throws -> EventLoopFuture<Response> {

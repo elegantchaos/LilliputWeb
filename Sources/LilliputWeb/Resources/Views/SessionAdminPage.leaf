@@ -1,0 +1,34 @@
+#extend("basic"):
+    #export("body"):
+                <h3 class="card-title">#(meta.title)</h3>
+
+                #if(isAdmin):
+                <h4>Users</h4>
+                #for(user in page.users):
+                   <li><a href="/admin-user/#(user.id)">#(user.name) - #(user.email)</a></li>
+                #endfor
+
+                <br />
+
+                <h4>Tokens</h4>
+                #for(token in page.tokens):
+                   <li>#(token.id)</li>
+                #endfor
+
+                <br />
+
+                <h4>Sessions</h4>
+                #for(session in page.sessions):
+                   <li>#(session.id)</li>
+                #endfor
+
+                <h4>Transcripts</h4>
+                #for(transcript in page.transcripts):
+                   <li>#(transcript.value)</li>
+                #endfor
+
+                <br />
+                #endif
+    #endexport
+#endextend
+

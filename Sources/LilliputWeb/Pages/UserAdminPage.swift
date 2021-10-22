@@ -21,7 +21,7 @@ struct UserAdminPage: LeafPage {
         let title: String
         let description: String
 
-        title = "User: \(user.name) (admin as \(loggedInUser!.name))"
+        title = "Edit User: \(user.name) (admin as \(loggedInUser!.name))"
         description = "Admin page for \(user.name)."
 
         return PageMetadata(title, description: description)

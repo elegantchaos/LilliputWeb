@@ -17,5 +17,13 @@
     </div>
 </form>
 
+</br>
+</br>
+
+<div class="text-muted">
+<div>Having problems logging in? Need to reset your password?</div>
+<div>Drop us <a href="mailto:support@strangecases.co.uk?subject=Strange%20Cases%20Support">an email</a> and we will try to help.</div>
+</div>
+
 #endexport
 #endextend

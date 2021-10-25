@@ -49,7 +49,14 @@
                     #endif
 
                     <div class="card-body">
-                        #import("body")
+                        #if(!isPublished):
+                            <div>COMING SOON!</div>
+                            <br/>
+                            <div>The game is not published yet, please check back here later.</div>
+
+                        #else:
+                            #import("body")
+                        #endif
                     </div>
                 </div>
             </div>

@@ -7,12 +7,11 @@ import Fluent
 import Vapor
 
 struct SplashPage: LeafPage {
-    let showTeaser = true
-    
     func meta(for user: User?) -> PageMetadata {
         let title = "Strange Cases"
         let description = "Strange Cases Splash Screen"
         return .init(title, description: description)
     }
+    
 }
 

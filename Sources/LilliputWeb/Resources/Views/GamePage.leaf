@@ -1,7 +1,12 @@
 #extend("basic"):
 #export("body"):
 
-#if(user == nil):
+#if(!isPublished):
+<div>COMING SOON!</div>
+<br/>
+<div>The game is not published yet, please check back here later.</div>
+
+#elseif(user == nil):
 <div>Welcome to Strange Cases.</div>
 
 <br/>

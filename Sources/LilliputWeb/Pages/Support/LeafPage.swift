@@ -5,8 +5,13 @@
 
 import Vapor
 
+fileprivate let isGamePublished = Environment.get("PUBLISHED") == "true"
+
 protocol LeafPage: Codable {
     func meta(for user: User?) -> PageMetadata
+}
+
+extension LeafPage {
 }
 
 struct Site: Codable {
@@ -24,6 +29,7 @@ struct RenderContext<Page>: Codable where Page: LeafPage {
         self.user = user
         self.error = error
         self.isAdmin = user?.isAdmin ?? false
+        self.isPublished = isGamePublished
     }
     
     let site: Site
@@ -33,6 +39,7 @@ struct RenderContext<Page>: Codable where Page: LeafPage {
     let user: User?
     let error: String?
     let isAdmin: Bool
+    let isPublished: Bool
 }
 
 extension Request {

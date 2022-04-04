@@ -12,7 +12,7 @@ final class AppTests: XCTestCase {
 
         let name = "ChairTest"
         let url = LilliputExamples.urlForGame(named: name)!
-        let game = GameConfiguration(name: name, url: url)
+        let game = GameConfiguration(name: name, url: url, database: "test")
         try configure(app, game: game)
 
         try app.test(.GET, "/") { res in

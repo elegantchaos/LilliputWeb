@@ -15,7 +15,7 @@ public func configure(_ app: Application, game: GameConfiguration) throws {
             configuration: postgresConfig
         ), as: .psql)
     } else {
-        app.databases.use(.postgres(hostname: "localhost", username: "vapor", password: "vapor", database: "cases"), as: .psql)
+        app.databases.use(.postgres(hostname: "localhost", username: "vapor", password: "vapor", database: game.database), as: .psql)
     }
     app.sessions.use(.fluent)
     
@@ -64,10 +64,12 @@ fileprivate func setupMigrations(_ app: Application) {
 public struct GameConfiguration {
     let name: String
     let url: URL
+    let database: String
 
-    public init(name: String, url: URL) {
+    public init(name: String, url: URL, database: String) {
         self.name = name
         self.url = url
+        self.database = database
     }
 }
 

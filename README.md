@@ -24,3 +24,20 @@ The host is written in Swift (as is Lilliput), and uses Vapor.
 It's very crude at the moment, with pretty much no UI, and the user's entire input history is evaluated every time they visit their profile page -- which gets the job done, but isn't at all efficient.
 
 
+## Local Testing
+
+### Install Postgres
+
+Install with `brew install postgresql`
+
+(Migrate database with `brew postgresql-upgrade-database`)
+
+### Create Database 
+
+Setup database:
+
+> psql postgres
+
+> CREATE ROLE vapor WITH LOGIN PASSWORD 'vapor';
+> ALTER ROLE vapor CREATEDB;
+> CREATE DATABASE test;

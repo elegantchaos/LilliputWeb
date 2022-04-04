@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/elegantchaos/Lilliput.git",
         "state": {
           "branch": null,
-          "revision": "877c63fd5181b2bc28174c12a8cf7b4323b438f1",
-          "version": "1.2.0"
+          "revision": "7ddc9c3938271b5b7feaa006b44a4235bf003d08",
+          "version": "1.2.2"
         }
       },
       {
@@ -123,8 +123,8 @@
         "repositoryURL": "https://github.com/vapor/multipart-kit.git",
         "state": {
           "branch": null,
-          "revision": "08588dc4233ad4bea8aa91fa275342276a12ad19",
-          "version": "4.0.1"
+          "revision": "c9ea04017b7fb3b1f034ad7a77f8e53d3e080be5",
+          "version": "4.2.1"
         }
       },
       {
@@ -204,8 +204,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio.git",
         "state": {
           "branch": null,
-          "revision": "3be4e0980075de10a4bc8dee07491d49175cfd7a",
-          "version": "2.27.0"
+          "revision": "addf69cfe60376c325397c8926589415576b1dd1",
+          "version": "2.34.0"
         }
       },
       {
@@ -249,8 +249,8 @@
         "repositoryURL": "https://github.com/vapor/vapor.git",
         "state": {
           "branch": null,
-          "revision": "5c3f1703cdce2cbced837d07aae6d1a897abf0b9",
-          "version": "4.44.1"
+          "revision": "68233685fd1a943e8772634e02abfec076dcb8f4",
+          "version": "4.52.1"
         }
       },
       {

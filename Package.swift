@@ -20,11 +20,11 @@ let package = Package(
         .package(url: "https://github.com/elegantchaos/Lilliput.git", from: "1.2.2"),
 
         // 💧 Vapor.
-        .package(url: "https://github.com/vapor/vapor.git", from: "4.48.7"),
-        .package(url: "https://github.com/apple/swift-nio.git", from: "2.32.3"),
-        .package(url: "https://github.com/vapor/fluent.git", from: "4.2.0"),
-        .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.0.0"),
-        .package(url: "https://github.com/vapor/leaf.git", from: "4.1.1"),
+        .package(url: "https://github.com/vapor/vapor.git", from: "4.55.3"),
+        .package(url: "https://github.com/apple/swift-nio.git", from: "2.39.0"),
+        .package(url: "https://github.com/vapor/fluent.git", from: "4.4.0"),
+        .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.2.6"),
+        .package(url: "https://github.com/vapor/leaf.git", from: "4.1.5"),
     ],
     targets: [
         .target(

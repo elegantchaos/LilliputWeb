@@ -25,10 +25,10 @@ enum EditorError: String, DebuggableError {
 
 extension PathComponent {
     static let editor: PathComponent = "editor"
-//    static let adminUser: PathComponent = "admin-user"
+    static let editObject: PathComponent = "edit-object"
+    static let objectParameter: PathComponent = ":object"
 //    static let adminTokens: PathComponent = "admin-tokens"
 //    static let adminSessions: PathComponent = "admin-sessions"
-//    static let userParameter: PathComponent = ":user"
 }
 
 //struct UpdateUserResponse: Codable {
@@ -40,10 +40,8 @@ extension PathComponent {
 struct EditorController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         routes.get(.editor, use: requireUser(handleGetOverview))
-//        routes.get(.adminTokens, use: requireUser(handleGetTokens))
-//        routes.get(.adminSessions, use: requireUser(handleGetSessions))
-//        routes.get(.adminUser, .userParameter, use: requireUser(handleGetUser))
-//        routes.post(.adminUser, .userParameter, use: requireUser(handleUpdateUser))
+        routes.get(.editObject, .objectParameter, use: requireUser(handleGetObject))
+        routes.post(.editObject, .objectParameter, use: requireUser(handleUpdateObject))
     }
     
     func unpack(_ data: (([SessionRecord], [User]), [Transcript])) -> ([SessionRecord], [User], [Transcript]) {
@@ -64,68 +62,34 @@ struct EditorController: RouteCollection {
             }
     }
     
-//    func handleGetTokens(_ req: Request, for loggedInUser: User) -> EventLoopFuture<Response> {
-//        guard loggedInUser.isAdmin else {
-//            return req.eventLoop.makeFailedFuture(AdminError.notAdmin)
-//        }
-//
-//        return Token.query(on: req.db).with(\.$user).all()
-//            .flatMap { tokens in
-//                let page = TokenAdminPage(tokens: tokens)
-//                return req.render(page, user: loggedInUser)
-//            }
-//    }
-//
-//    func handleGetSessions(_ req: Request, for loggedInUser: User) -> EventLoopFuture<Response> {
-//        guard loggedInUser.isAdmin else {
-//            return req.eventLoop.makeFailedFuture(AdminError.notAdmin)
-//        }
-//
-//        return SessionRecord.query(on: req.db).all()
-//            .flatMap { sessions in
-//                let page = SessionAdminPage(sessions: sessions)
-//                return req.render(page, user: loggedInUser)
-//            }
-//    }
-//
-//    func handleGetUser(_ req: Request, for loggedInUser: User) throws -> EventLoopFuture<Response> {
-//        guard loggedInUser.isAdmin else {
-//            return req.eventLoop.makeFailedFuture(AdminError.notAdmin)
-//        }
-//
-//        let userID = try req.parameters.require("user", as: UUID.self)
-//        let transcripts = Transcript
-//            .query(on: req.db)
-//            .with(\.$user)
-//            .filter(\.$user.$id == userID)
-//            .all()
-//
-//        let user = User.query(on: req.db).filter(\.$id == userID).first()
-//        return user
-//            .unwrap(or: AdminError.unknownUser)
-//            .and(transcripts)
-//            .flatMap { (user, transcripts) in
-//                req.render(UserAdminPage(user: user, transcripts: transcripts), user: loggedInUser) }
-//    }
-//
-//    func handleUpdateUser(_ req: Request, for loggedInUser: User) throws -> EventLoopFuture<Response> {
-//        guard loggedInUser.isAdmin else {
-//            return req.eventLoop.makeFailedFuture(AdminError.notAdmin)
-//        }
-//
-//        let response = try req.content.decode(UpdateUserResponse.self)
-//
-//        let userID = try req.parameters.require("user", as: UUID.self)
-//        let user = User.query(on: req.db).filter(\.$id == userID).first()
-//        return user
-//            .unwrap(or: AdminError.unknownUser)
-//            .map { (updatedUser: User) -> EventLoopFuture<Void> in
-//                updatedUser.name = response.name
-//                updatedUser.email = response.email
-//                updatedUser.roles = response.roles
-//
-//                return updatedUser.save(on: req.db)
-//            }
-//            .thenRedirect(with: req, to: .admin)
-//    }
+    func handleGetObject(_ req: Request, for loggedInUser: User) throws -> EventLoopFuture<Response> {
+        guard loggedInUser.isAdmin else {
+            return req.eventLoop.makeFailedFuture(AdminError.notAdmin)
+        }
+
+        let objectID = try req.parameters.require("object", as: String.self)
+        let page = EditObjectPage(game: req.application.game, objectID: objectID)
+        return req.render(page, user: loggedInUser)
+    }
+
+    func handleUpdateObject(_ req: Request, for loggedInUser: User) throws -> EventLoopFuture<Response> {
+        guard loggedInUser.isAdmin else {
+            return req.eventLoop.makeFailedFuture(AdminError.notAdmin)
+        }
+
+        let response = try req.content.decode(UpdateUserResponse.self)
+
+        let userID = try req.parameters.require("user", as: UUID.self)
+        let user = User.query(on: req.db).filter(\.$id == userID).first()
+        return user
+            .unwrap(or: AdminError.unknownUser)
+            .map { (updatedUser: User) -> EventLoopFuture<Void> in
+                updatedUser.name = response.name
+                updatedUser.email = response.email
+                updatedUser.roles = response.roles
+
+                return updatedUser.save(on: req.db)
+            }
+            .thenRedirect(with: req, to: .admin)
+    }
 }

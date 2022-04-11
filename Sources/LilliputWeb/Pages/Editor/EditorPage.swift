@@ -7,20 +7,37 @@ import Fluent
 import Lilliput
 import Vapor
 
-public extension StringTable {
-    var editableStrings: [String: [String]] {
-        return [:]
+struct EditableString: Codable {
+    static let multilineFields = ["location", "detailed"]
+    static let labels = [
+        "definite": "Definite Name",
+        "indefinite": "Indefinite Name",
+        "location": "Location Description",
+        "detailed": "Object Description"
+    ]
+    
+    let key: String
+    let label: String
+    let values: [String]
+    let multiline: Bool
+    
+    init(key: String, values: StringAlternatives) {
+        self.key = key
+        self.values = values.strings
+        self.multiline = Self.multilineFields.contains(key)
+        self.label = Self.labels[key] ?? key
     }
 }
+
 struct EditableObject: Codable {
     let id: String
     let name: String
-    let strings: [String: [String]]
+    let strings: [EditableString]
     
     init(_ object: Object) {
         id = object.id
         name = object.getDefinite()
-        strings = object.definition.strings.editableStrings
+        strings = object.definition.strings.table.map({ EditableString(key: $0.key, values: $0.value) })
     }
 }
 

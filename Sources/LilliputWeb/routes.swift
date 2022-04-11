@@ -16,5 +16,6 @@ func routes(_ app: Application) throws {
     try sessionProtected.register(collection: UserController())
     try sessionProtected.register(collection: GameController())
     try sessionProtected.register(collection: AdminController())
+    try sessionProtected.register(collection: EditorController())
     try app.register(collection: RegistrationController())
 }

@@ -31,7 +31,11 @@
                                 #if(user != nil):
                                     #if(isAdmin):
                                         <li class="nav-item">
-                                        <a href="/settings">profile</a> | <a href="/admin">admin</a>
+                                        <a href="/settings">profile</a> | <a href="/editor">editor</a> | <a href="/admin">admin</a>
+                                        </li>
+                                    #elseif(isEditor):
+                                        <li class="nav-item">
+                                            <a href="/settings">profile</a> | <a href="/editor">editor</a>
                                         </li>
                                     #else:
                                         <li class="nav-item"><a href="/settings">#(user.name)</a></li>

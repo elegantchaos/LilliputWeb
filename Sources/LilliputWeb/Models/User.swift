@@ -61,7 +61,11 @@ final class User: Model, Content {
     var isAdmin: Bool {
         hasRole("admin") || isBlessedEmail
     }
- 
+
+    var isEditor: Bool {
+        hasRole("editor") || isAdmin
+    }
+
     // TODO: remove me after migrating legacy installs
     var isBlessedEmail: Bool {
         guard let blessed = Environment.get("BLESSED_EMAIL"), !blessed.isEmpty, !email.isEmpty else { return false }

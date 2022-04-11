@@ -32,7 +32,7 @@
     <div class="form-group">
         <input type="text" name="command" class="form-control" id="command" value="#(request.command)" autofocus autocomplete="off" placeholder="enter a command" />
         <div class="help"><a href="/help">[help]</a></div>
-        <div class="prompt">#(page.prompt)
+        <div class="prompt">#unsafeHTML(page.prompt)
         </div>
     </div>
 </form>

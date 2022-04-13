@@ -11,15 +11,4 @@ let app = Application(env)
 defer { app.shutdown() }
 try configure(app, game: game)
 
-#if canImport(AppKit)
-import AppKit
-
-if Environment.get("OPEN_LINK")?.asBool ?? false {
-    let configuration = app.http.server.configuration
-    NSWorkspace.shared.open(URL(string: "http://\(configuration.hostname):\(configuration.port)/game")!)
-}
-
-
-#endif
-
 try app.run()

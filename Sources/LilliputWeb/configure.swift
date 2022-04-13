@@ -10,7 +10,9 @@ import LeafKit
 public func configure(_ app: Application, game: GameConfiguration) throws {
 
     if let databaseURL = Environment.get("DATABASE_URL"), var postgresConfig = PostgresConfiguration(url: databaseURL) {
-        postgresConfig.tlsConfiguration = .forClient(certificateVerification: .none)
+        var configuration: TLSConfiguration = .makeClientConfiguration()
+        configuration.certificateVerification = .none
+        postgresConfig.tlsConfiguration = configuration
         app.databases.use(.postgres(
             configuration: postgresConfig
         ), as: .psql)
@@ -46,6 +48,10 @@ public func configure(_ app: Application, game: GameConfiguration) throws {
     app.transcripts.use { req in DatabaseTranscriptRepository(database: req.db) }
     
     app.game = game
+
+    if Environment.get("OPEN_LOCALLY")?.asBool ?? false {
+        app.openLocally()
+    }
     
     try app.autoMigrate().wait()
 }
@@ -76,6 +82,8 @@ public struct GameConfiguration {
 struct GameConfigurationKey: StorageKey {
     typealias Value = GameConfiguration
 }
+
+
 extension Application {
     var game: GameConfiguration {
         get {
@@ -85,5 +93,18 @@ extension Application {
         set {
             self.storage[GameConfigurationKey.self] = newValue
         }
+    }
+}
+
+#if canImport(AppKit)
+import AppKit
+#endif
+
+public extension Application {
+    func openLocally() {
+        #if canImport(AppKit)
+        let configuration = http.server.configuration
+        NSWorkspace.shared.open(URL(string: "http://\(configuration.hostname):\(configuration.port)/game")!)
+        #endif
     }
 }

@@ -8,7 +8,7 @@ import Fluent
 
 public extension EventLoopFuture {
     func then<NewValue>(file: StaticString = #file, line: UInt = #line, _ callback: @escaping (Value) -> EventLoopFuture<NewValue>) -> EventLoopFuture<NewValue> {
-        flatMap(file: file, line: line, callback)
+        flatMap(callback)
     }
 
     func redirect(with request: Request, to: PathComponent) -> EventLoopFuture<Response> {

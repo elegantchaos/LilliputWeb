@@ -8,7 +8,7 @@ let package = Package(
     ],
     products: [
         .executable(
-            name: "Run",
+            name: "lilliweb",
             targets: ["Run"]
         ),
         .library(

@@ -7,16 +7,16 @@ import Fluent
 import Lilliput
 import Vapor
 
-struct SessionAdminPage: LeafPage {
-    let sessions: [SessionRecord]
+struct AdminTokenPage: LeafPage {
+    let tokens: [Token]
     
     func meta(for user: User?) -> PageMetadata {
         let title: String
         let description: String
 
         if let user = user {
-            title = "Session"
-            description = "Session admin page for \(user.name)."
+            title = "Tokens"
+            description = "Token admin page for \(user.name)."
         } else {
             title = "Not Logged In"
             description = "Not Logged In"

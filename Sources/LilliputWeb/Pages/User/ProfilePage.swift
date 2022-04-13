@@ -24,5 +24,22 @@ struct ProfilePage: LeafPage {
         }
         return PageMetadata(title, description: description)
     }
-}
+    
+    struct FormData: PasswordFormData {
+        let name: String
+        let email: String
+        let password: String
+        let confirm: String
 
+        init(from req: Request) throws {
+            try Self.validate(content: req)
+            self = try req.content.decode(Self.self)
+            try validatePasswordsMatch()
+        }
+
+        static func validations(_ validations: inout Validations) {
+            validations.add("email", as: String.self, is: .email)
+            validations.addPasswordValidations(allowEmpty: true)
+        }
+    }
+}

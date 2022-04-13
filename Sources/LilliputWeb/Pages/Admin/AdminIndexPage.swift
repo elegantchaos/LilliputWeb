@@ -7,7 +7,7 @@ import Fluent
 import Lilliput
 import Vapor
 
-struct AdminPage: LeafPage {
+struct AdminIndexPage: LeafPage {
     let users: [User]
     
     func meta(for user: User?) -> PageMetadata {

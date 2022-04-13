@@ -77,7 +77,7 @@ struct EditorController: RouteCollection {
             return req.eventLoop.makeFailedFuture(AdminError.notAdmin)
         }
 
-        let response = try req.content.decode(UpdateUserResponse.self)
+        let response = try req.content.decode(AdminUserPage.FormData.self)
 
         let userID = try req.parameters.require("user", as: UUID.self)
         let user = User.query(on: req.db).filter(\.$id == userID).first()
@@ -90,6 +90,6 @@ struct EditorController: RouteCollection {
 
                 return updatedUser.save(on: req.db)
             }
-            .thenRedirect(with: req, to: .admin)
+            .thenRedirect(with: req, to: .adminIndex)
     }
 }

@@ -7,7 +7,7 @@ import Fluent
 import Lilliput
 import Vapor
 
-struct UserAdminPage: LeafPage {
+struct AdminUserPage: LeafPage {
     let user: User
     let current: [String]
     let transcripts: [Transcript]
@@ -27,5 +27,27 @@ struct UserAdminPage: LeafPage {
 
         return PageMetadata(title, description: description)
     }
+    
+    // Sent back by the UserAdminPage form
+    struct FormData: PasswordFormData {
+        let name: String
+        let email: String
+        let roles: String
+        let password: String
+        let confirm: String
+
+        init(from req: Request) throws {
+            try Self.validate(content: req)
+            self = try req.content.decode(Self.self)
+            try validatePasswordsMatch()
+        }
+        
+        static func validations(_ validations: inout Validations) {
+            validations.add("email", as: String.self, is: .email)
+            validations.addPasswordValidations(allowEmpty: true)
+        }
+
+    }
+
 }
 

@@ -11,11 +11,6 @@ extension PathComponent {
     static let logout: PathComponent = "logout"
 }
 
-struct UserResponse: Codable {
-    let name: String
-    let email: String
-}
-
 struct UserController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         routes.get(.settings, use: requireUser(renderProfilePage))
@@ -24,9 +19,12 @@ struct UserController: RouteCollection {
     }
     
     func handleUpdateSettings(_ req: Request, for user: User) throws -> EventLoopFuture<Response> {
-        let response = try req.content.decode(UserResponse.self)
-        user.name = response.name
-        user.email = response.email
+        let formData = try ProfilePage.FormData(from: req)
+        user.name = formData.name
+        user.email = formData.email
+        if !formData.password.isEmpty, let newHash = try? req.password.sync.hash(formData.password) {
+            user.passwordHash = newHash
+        }
         return user.save(on: req.db)
             .thenRedirect(with: req, to: .game)
     }

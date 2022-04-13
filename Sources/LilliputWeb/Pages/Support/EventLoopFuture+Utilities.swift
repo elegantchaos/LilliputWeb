@@ -41,3 +41,11 @@ public extension EventLoopFuture where Value: Model {
         flatMap { item in item.create(on: db) }
     }
 }
+
+extension EventLoopFuture where Value == String {
+    func withNewUser(using registration: RegisterPage.FormData, with req: Request) -> EventLoopFuture<User>  {
+        flatMapThrowing { hash in User(name: registration.name, email: registration.email, passwordHash: hash) }
+            .translatingError(to: AuthenticationError.emailAlreadyExists, if: { (error: DatabaseError) in error.isConstraintFailure })
+    }
+    
+}

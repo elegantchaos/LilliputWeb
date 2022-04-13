@@ -15,8 +15,10 @@ try configure(app, game: game)
 import AppKit
 
 if Environment.get("OPEN_LINK")?.asBool ?? false {
-    NSWorkspace.shared.open(URL(string: "http://127.0.0.1:8080/game")!)
+    let configuration = app.http.server.configuration
+    NSWorkspace.shared.open(URL(string: "http://\(configuration.hostname):\(configuration.port)/game")!)
 }
+
 
 #endif
 

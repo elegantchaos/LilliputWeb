@@ -40,8 +40,8 @@ extension PathComponent {
 struct EditorController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         routes.get(.editor, use: requireUser(handleGetOverview))
-        routes.get(.editObject, .objectParameter, use: requireUser(handleGetObject))
-        routes.post(.editObject, .objectParameter, use: requireUser(handleUpdateObject))
+        routes.get(.editObject, .objectParameter, use: requireUser(handleGetEditObject))
+        routes.post(.editObject, .objectParameter, use: requireUser(handlePostEditObject))
     }
     
     func unpack(_ data: (([SessionRecord], [User]), [Transcript])) -> ([SessionRecord], [User], [Transcript]) {
@@ -62,7 +62,7 @@ struct EditorController: RouteCollection {
             }
     }
     
-    func handleGetObject(_ req: Request, for loggedInUser: User) throws -> EventLoopFuture<Response> {
+    func handleGetEditObject(_ req: Request, for loggedInUser: User) throws -> EventLoopFuture<Response> {
         guard loggedInUser.isAdmin else {
             return req.eventLoop.makeFailedFuture(AdminError.notAdmin)
         }
@@ -72,7 +72,7 @@ struct EditorController: RouteCollection {
         return req.render(page, user: loggedInUser)
     }
 
-    func handleUpdateObject(_ req: Request, for loggedInUser: User) throws -> EventLoopFuture<Response> {
+    func handlePostEditObject(_ req: Request, for loggedInUser: User) throws -> EventLoopFuture<Response> {
         guard loggedInUser.isAdmin else {
             return req.eventLoop.makeFailedFuture(AdminError.notAdmin)
         }

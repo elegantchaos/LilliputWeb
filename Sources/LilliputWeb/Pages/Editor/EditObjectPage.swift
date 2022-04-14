@@ -3,11 +3,6 @@
 //  All code (c) 2022 - present day, Elegant Chaos Limited.
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-//  Created by Sam Deane on 11/04/2022.
-//  All code (c) 2022 - present day, Elegant Chaos Limited.
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
 import Fluent
 import Lilliput
 import Vapor
@@ -29,6 +24,10 @@ struct EditObjectPage: LeafPage {
         let description = "Object \(object.id) - \(object.name)."
 
         return PageMetadata(title, description: description)
+    }
+    
+    struct FormData: Content {
+        
     }
 }
 

@@ -12,7 +12,7 @@
             #for(value in string.values):
                 #if(string.multiline):
                 <textarea
-                    id="#(string.key)"
+                    id="string.#(string.key).#(index)"
                     name="#(string.key)"
                     rows="5"
                     cols="80"
@@ -21,7 +21,7 @@
                 >#(value)</textarea>
                 #else:
                 <input
-                    id="#(string.key)"
+                    id="string.#(string.key).#(index)"
                     name="#(string.key)"
                     type="text"
                     class="form-control"

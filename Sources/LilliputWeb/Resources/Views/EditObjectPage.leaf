@@ -4,35 +4,29 @@
 
 #if(isAdmin):
 
-<form action="/edit-object/#(object.id)" method="POST">
-    <div class="form-group">
-        #for(string in page.object.strings):
-            <label for="#(string.key)">#(string.label)</label>
-            <a href="test" class="form-link">[+]</a>
-            #for(value in string.values):
-                #if(string.multiline):
-                <textarea
-                    id="string.#(string.key).#(index)"
-                    name="#(string.key)"
-                    rows="5"
-                    cols="80"
-                    class="form-control"
-                    autofocus
-                >#(value)</textarea>
-                #else:
-                <input
-                    id="string.#(string.key).#(index)"
-                    name="#(string.key)"
-                    type="text"
-                    class="form-control"
-                    value="#(value)"
-                />
+<form action="/edit-object/#(page.session.id)" method="POST">
+    #for(group in page.session.groups):
+        <div class="form-group">
+        <h3>#(group.title)</h3>
+            #for(property in group.properties):
+                <label for="#(property.path)">#(property.title)</label>
+                <a href="/edit-object-add-variation/#(page.session.id)/#(property.path)" class="form-link">[+]</a>
+                #if(property.kind == "strings"):
+                     #for(value in property.values):
+                         <textarea
+                         id="#(property.path).#(index)"
+                         name="#(property.path).#(index)"
+                         rows="5"
+                         cols="80"
+                         class="form-control"
+                         autofocus
+                         >#(value)</textarea>
+                     #endfor
                 #endif
             #endfor
-
-        #endfor
-    </div>
-
+        </div>
+    #endfor
+    
     <div class="form-group">
         <input type="submit" class="btn btn-block btn-primary" value="Update" />
     </div>

@@ -8,7 +8,7 @@ import Lilliput
 import Vapor
 
 struct EditObjectPage: LeafPage {
-    let object: EditableObject
+    let session: EditSession
     
     init(game: GameConfiguration, objectID: String) {
         let driver = BasicDriver()
@@ -16,12 +16,13 @@ struct EditObjectPage: LeafPage {
         engine.load(url: game.url)
         engine.setup()
         
-        object = EditableObject(engine.object(withID: objectID))
+        let object = engine.object(withID: objectID)
+        session = EditSession(for: object)
     }
     
     func meta(for user: User?) -> PageMetadata {
-        let title = "Object: \(object.id)"
-        let description = "Object \(object.id) - \(object.name)."
+        let title = "Object: \(session.title)"
+        let description = "Object \(session.id) - \(session.title)."
 
         return PageMetadata(title, description: description)
     }
@@ -31,5 +32,24 @@ struct EditObjectPage: LeafPage {
     }
 }
 
+extension EditSession {
+    init(for object: Object) {
+        id = object.id
+        title = object.getDefinite()
+        groups = [object.definition.generalDescriptionGroup]
+    }
+}
 
+extension Definition {
+    var generalDescriptionGroup: EditGroup {
+        var properties: [EditProperty] = []
+        for key in generalDescriptionKeys {
+            if let alternatives = strings.alternatives(for: key) {
+                properties.append(.init(title: key, path: "strings.\(key)", kind: .strings, values: alternatives.strings))
+            }
+        }
+
+        return EditGroup(title: "Description", properties: properties)
+    }
+}
 

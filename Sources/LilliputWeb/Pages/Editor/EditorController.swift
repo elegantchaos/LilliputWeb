@@ -4,6 +4,7 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 import Fluent
+import Lilliput
 import Vapor
 
 enum EditorError: String, DebuggableError {
@@ -68,7 +69,8 @@ struct EditorController: RouteCollection {
         }
 
         let objectID = try req.parameters.require("object", as: String.self)
-        let page = EditObjectPage(game: req.application.game, objectID: objectID)
+        let session = editSessionForObject(withID: objectID, game: req.application.game)
+        let page = EditObjectPage(session: session)
         return req.render(page, user: loggedInUser)
     }
 
@@ -77,19 +79,33 @@ struct EditorController: RouteCollection {
             return req.eventLoop.makeFailedFuture(AdminError.notAdmin)
         }
 
-        let response = try req.content.decode(AdminUserPage.FormData.self)
-
-        let userID = try req.parameters.require("user", as: UUID.self)
-        let user = User.query(on: req.db).filter(\.$id == userID).first()
-        return user
-            .unwrap(or: AdminError.unknownUser)
-            .map { (updatedUser: User) -> EventLoopFuture<Void> in
-                updatedUser.name = response.name
-                updatedUser.email = response.email
-                updatedUser.roles = response.roles
-
-                return updatedUser.save(on: req.db)
-            }
-            .thenRedirect(with: req, to: .adminIndex)
+        let properties = try req.content.decode([String:String].self)
+        let objectID = try req.parameters.require("object", as: String.self)
+        let game = req.application.game
+        updateObject(withID: objectID, properties: properties, game: game)
+        let session = editSessionForObject(withID: objectID, game: game)
+        let page = EditObjectPage(session: session)
+        return req.render(page, user: loggedInUser)
+    }
+    
+    func editSessionForObject(withID objectID: String, game: GameConfiguration) -> EditSession {
+        let driver = BasicDriver()
+        let engine = Engine(driver: driver)
+        engine.load(url: game.url)
+        engine.setup()
+        
+        let object = engine.object(withID: objectID)
+        let session = EditSession(for: object)
+        return session
+    }
+    
+    func updateObject(withID objectID: String, properties: [String:String], game: GameConfiguration) {
+        let driver = BasicDriver()
+        let engine = Engine(driver: driver)
+        engine.load(url: game.url)
+        engine.setup()
+        
+        let object = engine.object(withID: objectID)
+        object.definition.update(fromEditSubmission: properties)
     }
 }

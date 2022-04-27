@@ -10,16 +10,6 @@ import Vapor
 struct EditObjectPage: LeafPage {
     let session: EditSession
     
-    init(game: GameConfiguration, objectID: String) {
-        let driver = BasicDriver()
-        let engine = Engine(driver: driver)
-        engine.load(url: game.url)
-        engine.setup()
-        
-        let object = engine.object(withID: objectID)
-        session = EditSession(for: object)
-    }
-    
     func meta(for user: User?) -> PageMetadata {
         let title = "Object: \(session.title)"
         let description = "Object \(session.id) - \(session.title)."
@@ -54,6 +44,12 @@ extension Definition {
         }
 
         return EditGroup(title: "Description", properties: properties)
+    }
+    
+    func update(fromEditSubmission properties: [String:String]) {
+        for (key, value) in properties {
+            print("\(key): \(value)")
+        }
     }
 }
 

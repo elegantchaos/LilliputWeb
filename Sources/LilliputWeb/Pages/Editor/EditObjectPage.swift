@@ -41,11 +41,15 @@ extension EditSession {
 }
 
 extension Definition {
+
     var generalDescriptionGroup: EditGroup {
         var properties: [EditProperty] = []
         for key in generalDescriptionKeys {
             if let alternatives = strings.alternatives(for: key) {
-                properties.append(.init(title: key, path: "strings.\(key)", kind: .strings, values: alternatives.strings))
+                let path = "strings.\(key)"
+                let title = label(forPath: path)
+                let kind: EditProperty.Kind = pathIsMultiline(path) ? .text : .strings
+                properties.append(.init(title: title, path: path, kind: kind, values: alternatives.strings))
             }
         }
 

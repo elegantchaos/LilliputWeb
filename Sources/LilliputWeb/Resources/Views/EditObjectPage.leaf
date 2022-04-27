@@ -9,9 +9,12 @@
         <div class="form-group">
         <h3>#(group.title)</h3>
             #for(property in group.properties):
-                <label for="#(property.path)">#(property.title)</label>
-                <a href="/edit-object-add-variation/#(page.session.id)/#(property.path)" class="form-link">[+]</a>
-                #if(property.kind == "strings"):
+                <ul class="edit-property">
+                    <li><label for="#(property.path)">#(property.title)</label></li>
+                    <li><input type="submit" value="[+]" formaction="/edit-object-add-variation/#(page.session.id)/#(property.path)" /></li>
+                </ul>
+                
+                #if(property.kind == "text"):
                      #for(value in property.values):
                          <textarea
                          id="#(property.path).#(index)"
@@ -21,6 +24,16 @@
                          class="form-control"
                          autofocus
                          >#(value)</textarea>
+                     #endfor
+                #elseif(property.kind == "strings"):
+                     #for(value in property.values):
+                        <input
+                         id="#(property.path).#(index)"
+                         name="#(property.path).#(index)"
+                         type="text"
+                         class="form-control"
+                         value="#(value)"
+                         />
                      #endfor
                 #endif
             #endfor

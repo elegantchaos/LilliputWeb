@@ -4,6 +4,7 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 import Foundation
+import Lilliput
 
 struct EditSession: Codable {
     let id: String
@@ -43,18 +44,12 @@ struct EditProperty: Codable {
     let values: [String]
 }
 
-/*
- 
- #else:
- <input
- id="string.#(string.key).#(index)"
- name="#(string.key)"
- type="text"
- class="form-control"
- value="#(value)"
- />
- #endif
- #endfor
-
- 
- */
+struct EditableObject: Codable {
+    let id: String
+    let name: String
+    
+    init(_ object: Object) {
+        id = object.id
+        name = object.getDefinite()
+    }
+}

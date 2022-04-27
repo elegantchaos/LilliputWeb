@@ -1,10 +1,10 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.5
 import PackageDescription
 
 let package = Package(
     name: "LilliputWeb",
     platforms: [
-       .macOS(.v10_15)
+       .macOS(.v12)
     ],
     products: [
         .executable(
@@ -18,6 +18,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/elegantchaos/Lilliput.git", from: "1.2.2"),
+        .package(url: "https://github.com/elegantchaos/Runner", from: "1.0.0"),
 
         // 💧 Vapor.
         .package(url: "https://github.com/vapor/vapor.git", from: "4.55.3"),
@@ -31,15 +32,16 @@ let package = Package(
             dependencies: [
             .product(name: "Fluent", package: "fluent"),
             .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
-            .product(name: "Vapor", package: "vapor"),
             .product(name: "Leaf", package: "leaf"),
             .product(name: "Lilliput", package: "Lilliput"),
+            .product(name: "Vapor", package: "vapor"),
+            .product(name: "Runner", package: "Runner")
             ],
             resources: [
                 .copy("Resources/Views")
             ]
         ),
-        .target(name: "Run", dependencies: [
+        .executableTarget(name: "Run", dependencies: [
             .target(name: "LilliputWeb"),
             .product(name: "LilliputExamples", package: "Lilliput"),
         ]),

@@ -5,7 +5,7 @@
 
 import Vapor
 
-fileprivate let isGamePublished = Environment.get("PUBLISHED") == "true"
+fileprivate let isGamePublished = Environment.get("PUBLISHED") != "false"
 
 protocol LeafPage: Codable {
     func meta(for user: User?) -> PageMetadata

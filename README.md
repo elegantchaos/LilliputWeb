@@ -43,3 +43,4 @@ Setup database:
 > CREATE ROLE vapor WITH LOGIN PASSWORD 'vapor';
 > ALTER ROLE vapor CREATEDB;
 > CREATE DATABASE test;
+> GRANT ALL ON SCHEMA public TO vapor;

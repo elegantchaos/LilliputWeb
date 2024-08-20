@@ -8,17 +8,16 @@ import LeafKit
 // configures your application
 
 public func configure(_ app: Application, game: GameConfiguration) throws {
+    
+    var tls = PostgresConnection.Configuration.TLS.disable // TODO: fix this?
 
-    if let databaseURL = Environment.get("DATABASE_URL"), var postgresConfig = PostgresConfiguration(url: databaseURL) {
-        var configuration: TLSConfiguration = .makeClientConfiguration()
-        configuration.certificateVerification = .none
-        postgresConfig.tlsConfiguration = configuration
-        app.databases.use(.postgres(
-            configuration: postgresConfig
-        ), as: .psql)
+    var postgresConfig: SQLPostgresConfiguration
+    if let databaseURL = Environment.get("DATABASE_URL") {
+        postgresConfig = try SQLPostgresConfiguration(url: databaseURL)
     } else {
-        app.databases.use(.postgres(hostname: "localhost", username: "vapor", password: "vapor", database: game.database), as: .psql)
+        postgresConfig = SQLPostgresConfiguration(hostname: "localhost", username: "vapor", password: "vapor", database: game.database, tls: tls)
     }
+    app.databases.use(.postgres(configuration: postgresConfig), as: .psql)
     app.sessions.use(.fluent)
     
     setupMigrations(app)

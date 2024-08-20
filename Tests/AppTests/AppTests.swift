@@ -13,11 +13,16 @@ final class AppTests: XCTestCase {
         let name = "ChairTest"
         let url = LilliputExamples.urlForGame(named: name)!
         let game = GameConfiguration(name: name, url: url, database: "test")
-        try configure(app, game: game)
 
-        try app.test(.GET, "/") { res in
-            XCTAssertEqual(res.status, .ok)
-            XCTAssertTrue(res.body.string.contains(game.name))
+        do {
+            try configure(app, game: game)
+            try app.test(.GET, "/game") { res in
+                XCTAssertEqual(res.status, .ok)
+                XCTAssertTrue(res.body.string.contains(game.name))
+            }
+        } catch {
+            print(String(reflecting: error))
+            throw error
         }
     }
 }

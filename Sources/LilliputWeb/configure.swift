@@ -9,14 +9,18 @@ import LeafKit
 
 public func configure(_ app: Application, game: GameConfiguration) throws {
     
-    app.databases.use(DatabaseConfigurationFactory.postgres(configuration: .init(
+    let dbConfig = DatabaseConfigurationFactory.postgres(configuration: .init(
         hostname: Environment.get("DATABASE_HOST") ?? "localhost",
         port: Environment.get("DATABASE_PORT").flatMap(Int.init(_:)) ?? SQLPostgresConfiguration.ianaPortNumber,
         username: Environment.get("DATABASE_USERNAME") ?? "vapor",
         password: Environment.get("DATABASE_PASSWORD") ?? "vapor",
         database: Environment.get("DATABASE_NAME") ?? game.database,
         tls: .prefer(try .init(configuration: .clientDefault)))
-    ), as: .psql)
+    )
+    
+    print("LilliputWeb db config \(dbConfig)")
+    
+    app.databases.use(dbConfig, as: .psql)
     
     app.sessions.use(.fluent)
     

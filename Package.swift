@@ -17,7 +17,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/elegantchaos/Lilliput.git", from: "1.2.2"),
+        .package(url: "https://github.com/elegantchaos/Lilliput.git", from: "1.2.3"),
         .package(url: "https://github.com/elegantchaos/Runner", from: "1.0.0"),
 
         // 💧 Vapor.

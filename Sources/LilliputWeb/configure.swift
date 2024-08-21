@@ -14,8 +14,10 @@ public func configure(_ app: Application, game: GameConfiguration) throws {
     var postgresConfig: SQLPostgresConfiguration
     if let databaseURL = Environment.get("DATABASE_URL") {
         postgresConfig = try SQLPostgresConfiguration(url: databaseURL)
+        print("Database URL is \(databaseURL).")
     } else {
-        postgresConfig = SQLPostgresConfiguration(hostname: "localhost", username: "vapor", password: "vapor", database: game.database, tls: tls)
+        print("Database hostname is db.")
+        postgresConfig = SQLPostgresConfiguration(hostname: "db", username: "vapor", password: "vapor", database: game.database, tls: tls)
     }
     app.databases.use(.postgres(configuration: postgresConfig), as: .psql)
     app.sessions.use(.fluent)
